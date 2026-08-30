@@ -1,0 +1,336 @@
+﻿?<!--
+  ============================================================================
+  LABAQUA — Laboratório de Organismos Aquáticos (Jorge L. S. Nunes / UFMA)
+  ============================================================================
+  Página FILHA do site (repete header/nav/footer/suggest-panel/bottom-bar
+  de index.html).
+  Página: Livros Publicados — arquivo producoes-livros.html
+  ============================================================================
+-->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Livros Publicados | LabAqua — Laboratório de Organismos Aquáticos (UFMA)">
+<meta property="og:description" content="Livros publicados e organizados pelo LabAqua — Laboratório de Organismos Aquáticos (UFMA).">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="LOGO.png" type="image/png">
+<meta name="theme-color" content="#0F4C81">
+<title>Livros Publicados | LabAqua — Laboratório de Organismos Aquáticos (UFMA)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="assets/css/styles.css">
+/* ============================================================
+     GRADE DE LIVROS PUBLICADOS (cards com capa + referência)
+     ------------------------------------------------------------
+     Card = link direto pro PDF quando o arquivo já foi anexado
+     (abre em nova aba); sem arquivo ainda, o card fica sem link,
+     com aviso "aguardando arquivo" e tarja "Em breve" sobre a capa.
+     Cada <img> tem fallback automático (gradiente com o título)
+     caso o arquivo de thumb ainda não exista.
+     ============================================================ */
+  .book-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:22px;
+  }
+  .book-card{
+    display:flex;flex-direction:column;
+    background:var(--white);
+    border:1px solid var(--sand-dim);
+    border-radius:var(--radius-m);
+    overflow:hidden;
+    box-shadow:0 2px 8px rgba(14,46,44,0.06);
+    transition:box-shadow .32s cubic-bezier(.16,.84,.44,1),
+               transform .32s cubic-bezier(.16,.84,.44,1),
+               border-color .32s ease;
+  }
+  a.book-card:hover{
+    box-shadow:0 20px 38px rgba(14,46,44,0.2);
+    transform:translateY(-7px) scale(1.015);
+    border-color:var(--seagrass);
+  }
+  a.book-card:active{transform:translateY(-3px) scale(1.005);}
+  a.book-card:focus-visible{outline:3px solid var(--seagrass);outline-offset:-3px;}
+  /* cards sem arquivo ainda: não são clicáveis, mas ganham um leve
+     realce ao passar o mouse para indicar que não foram esquecidos */
+  div.book-card{cursor:default;}
+  div.book-card:hover{
+    box-shadow:0 8px 18px rgba(14,46,44,0.1);
+    border-color:var(--sand-dim);
+  }
+  .book-cover{position:relative;overflow:hidden;}
+  .book-cover img{
+    width:100%;aspect-ratio:2/3;object-fit:cover;
+    display:block;
+    transition:transform .5s cubic-bezier(.16,.84,.44,1), filter .32s ease;
+  }
+  a.book-card:hover .book-cover img{transform:scale(1.08);filter:brightness(0.88);}
+  /* overlay com aviso "Abrir PDF", revelado só nos cards clicáveis */
+  .book-cover::after{
+    content:"Abrir PDF ↗";
+    position:absolute;inset:auto 0 0 0;
+    padding:10px 16px;
+    background:linear-gradient(0deg, rgba(14,46,44,0.82), transparent);
+    color:var(--white);
+    font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;
+    letter-spacing:0.03em;
+    opacity:0;transform:translateY(8px);
+    transition:opacity .28s ease, transform .28s ease;
+    pointer-events:none;
+  }
+  a.book-card:hover .book-cover::after{opacity:1;transform:translateY(0);}
+  .book-fallback{
+    display:none;
+    width:100%;aspect-ratio:2/3;
+    align-items:center;justify-content:center;
+    background:linear-gradient(155deg, var(--ocean-mid), var(--seagrass) 78%);
+    color:rgba(255,253,249,0.85);
+    font-family:'IBM Plex Mono',monospace;font-size:12px;text-align:center;
+    padding:20px;line-height:1.5;
+  }
+  /* tarja diagonal sobre a capa (ou o fallback) dos livros que ainda não
+     têm PDF anexado — some sozinha quando o arquivo/badge "ok" entrar */
+  .book-ribbon{
+    position:absolute;top:16px;right:-38px;z-index:2;
+    width:150px;padding:5px 0;
+    background:var(--coral);color:var(--white);
+    font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+    letter-spacing:0.06em;text-transform:uppercase;text-align:center;
+    transform:rotate(45deg);
+    box-shadow:0 2px 6px rgba(14,46,44,0.25);
+    pointer-events:none;
+  }
+  .book-info{padding:14px 16px 18px;flex:1;display:flex;flex-direction:column;gap:6px;}
+  .book-title{font-size:14px;font-weight:600;color:var(--ocean-deep);line-height:1.4;}
+  .book-badge{
+    display:inline-flex;align-self:flex-start;
+    margin-top:4px;padding:4px 10px;
+    border-radius:999px;font-size:11px;font-weight:600;
+    font-family:'IBM Plex Mono',monospace;
+    transition:background .22s ease, color .22s ease;
+  }
+  .book-badge.ok{background:var(--seagrass);color:var(--white);}
+  a.book-card:hover .book-badge.ok{background:var(--ocean-deep);}
+  .book-badge.pending{background:var(--sand);color:var(--coral);border:1px solid var(--sand-dim);}
+
+  /* entrada em cascata dos cards ao carregar a página */
+  .book-card.fade-up{animation-duration:.7s;}
+  .book-grid .book-card:nth-child(1){animation-delay:.05s;}
+  .book-grid .book-card:nth-child(2){animation-delay:.12s;}
+  .book-grid .book-card:nth-child(3){animation-delay:.19s;}
+  .book-grid .book-card:nth-child(4){animation-delay:.26s;}
+  .book-grid .book-card:nth-child(5){animation-delay:.33s;}
+  .book-grid .book-card:nth-child(6){animation-delay:.4s;}
+  .book-grid .book-card:nth-child(7){animation-delay:.47s;}
+
+  @media (max-width:900px){
+    .book-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:560px){
+    .book-grid{grid-template-columns:1fr;}
+  }
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="logo fade-up" href="index.html#inicio">
+      <img class="logo-img" src="LOGO.png" alt="LabAqua — Laboratório de Organismos Aquáticos">
+    </a>
+    <div class="header-right">
+      <div class="header-contact">
+        <a href="mailto:silvanunes@yahoo.com">silvanunes@yahoo.com</a>
+        <a href="tel:+5598981170808">(98) 98117-0808</a>
+      </div>
+      <a class="cv-link" href="http://lattes.cnpq.br/" target="_blank" rel="noopener">Currículo Lattes</a>
+    </div>
+  </div>
+</header>
+
+<nav class="main-nav" id="mainNav">
+  <div class="nav-inner">
+    <div class="nav-item"><a href="index.html#inicio">Início</a></div>
+    <div class="nav-item">
+      <button class="nav-top" aria-haspopup="true" aria-expanded="false">Jorge L. S. Nunes</button>
+      <div class="dropdown">
+        <a href="index.html#curriculo">Currículo</a>
+        <a href="index.html#contato">Contato</a>
+      </div>
+    </div>
+    <div class="nav-item"><a href="projetos.html">Projetos de Pesquisa</a></div>
+    <div class="nav-item">
+      <button class="nav-top" aria-haspopup="true" aria-expanded="false">Parceria</button>
+      <div class="dropdown">
+        <a href="parceria-alunos.html">Alunos</a>
+        <a href="parceria-pesquisadores.html">Pesquisadores</a>
+        <a href="parceria-grupo-estudo.html">Grupo de Estudo</a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <button class="nav-top" aria-haspopup="true" aria-expanded="false">Produções</button>
+      <div class="dropdown">
+        <a href="producoes-artigos.html">Artigos Publicados</a>
+        <a href="producoes-livros.html">Livros Publicados</a>
+        <a href="producoes-capitulos.html">Capítulo de Livro</a>
+        <a href="producoes-monografia.html">Monografia / Dissertação / Tese</a>
+      </div>
+    </div>
+
+    <div class="nav-item"><a href="expedicoes.html">Expedições</a></div>
+  </div>
+</nav>
+
+<main>
+
+  <!-- ===== INTRO DA PÁGINA "LIVROS PUBLICADOS" ===== -->
+  <section class="hero" style="padding:64px 0 24px;">
+    <div class="wrap hero-inner">
+      <span class="eyebrow fade-up">Produções · Livros Publicados</span>
+      <h1 class="fade-up d1">Livros publicados e organizados</h1>
+      <p class="lede fade-up d2">Clique em um card para abrir o livro completo em PDF, em uma nova aba.</p>
+    </div>
+  </section>
+
+  <!-- ===== GRADE DE LIVROS ===== -->
+  <section class="block alt">
+    <div class="wrap">
+      <div class="book-grid">
+
+        <div class="book-card fade-up">
+          <div class="book-cover">
+            <span class="book-ribbon">Em breve</span>
+            <div class="book-fallback" style="display:flex;">Animais aquáticos perigosos do Brasil</div>
+          </div>
+          <div class="book-info">
+            <span class="book-title">Animais aquáticos perigosos do Brasil</span>
+            <span class="book-badge pending">aguardando arquivo</span>
+          </div>
+        </div>
+
+        <a class="book-card fade-up" href="assets/livros/2021-guia-peixes-itamacaoca.pdf" target="_blank" rel="noopener">
+          <div class="book-cover">
+            <img src="assets/livros/thumbs/02-guia-itamacaoca-thumb.jpg" alt="Biodiversidade, potencialidades ornamentais e guia ilustrado dos peixes da Mata Itamacaoca" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="book-fallback">Biodiversidade, potencialidades ornamentais e guia ilustrado dos peixes da Mata Itamacaoca</div>
+          </div>
+          <div class="book-info">
+            <span class="book-title">Biodiversidade, potencialidades ornamentais e guia ilustrado dos peixes da Mata Itamacaoca, município de Chapadinha-MA</span>
+            <span class="book-badge ok">Baixar PDF</span>
+          </div>
+        </a>
+
+        <div class="book-card fade-up">
+          <div class="book-cover">
+            <span class="book-ribbon">Em breve</span>
+            <div class="book-fallback" style="display:flex;">Peixes do Parque Nacional dos Lençóis Maranhenses</div>
+          </div>
+          <div class="book-info">
+            <span class="book-title">Peixes do Parque Nacional dos Lençóis Maranhenses</span>
+            <span class="book-badge pending">aguardando arquivo</span>
+          </div>
+        </div>
+
+        <a class="book-card fade-up" href="assets/livros/2016-marcelinho-2ed.pdf" target="_blank" rel="noopener">
+          <div class="book-cover">
+            <img src="assets/livros/thumbs/04-marcelinho-2ed-thumb.jpg" alt="Marcelinho e seus porquês em sua primeira visita à praia — 2ª edição" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="book-fallback">Marcelinho e seus porquês em sua primeira visita à praia — 2ª ed.</div>
+          </div>
+          <div class="book-info">
+            <span class="book-title">Marcelinho e seus porquês em sua primeira visita à praia (livro infantil)</span>
+            <span class="book-badge ok">Baixar PDF</span>
+          </div>
+        </a>
+
+        <div class="book-card fade-up">
+          <div class="book-cover">
+            <span class="book-ribbon">Em breve</span>
+            <div class="book-fallback" style="display:flex;">Marcelinho e seus porquês em sua primeira visita à praia — 1ª ed.</div>
+          </div>
+          <div class="book-info">
+            <span class="book-title">Marcelinho e seus porquês em sua primeira visita à praia (livro infantil)</span>
+            <span class="book-badge pending">aguardando arquivo</span>
+          </div>
+        </div>
+
+        <a class="book-card fade-up" href="assets/livros/2013-biodiversidade-marinha-ilha-maranhao.pdf" target="_blank" rel="noopener">
+          <div class="book-cover">
+            <img src="assets/livros/thumbs/06-biodiversidade-ilha-thumb.jpg" alt="Biodiversidade marinha da Ilha do Maranhão" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="book-fallback">Biodiversidade marinha da Ilha do Maranhão</div>
+          </div>
+          <div class="book-info">
+            <span class="book-title">Biodiversidade marinha da Ilha do Maranhão</span>
+            <span class="book-badge ok">Baixar PDF</span>
+          </div>
+        </a>
+
+        <a class="book-card fade-up" href="assets/livros/2011-peixes-marinhos-estuarinos-maranhao.pdf" target="_blank" rel="noopener">
+          <div class="book-cover">
+            <img src="assets/livros/thumbs/07-peixes-marinhos-estuarinos-thumb.jpg" alt="Peixes Marinhos e Estuarinos do Maranhão" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="book-fallback">Peixes Marinhos e Estuarinos do Maranhão</div>
+          </div>
+          <div class="book-info">
+            <span class="book-title">Peixes Marinhos e Estuarinos do Maranhão</span>
+            <span class="book-badge ok">Baixar PDF</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Laboratório de Ictiologia — UFMA</span>
+    <span>silvanunes@yahoo.com · (98) 98117-0808</span>
+  </div>
+</footer>
+
+<!-- SUGGESTION FORM PANEL -->
+<div class="suggest-panel" id="suggestPanel">
+  <h4>Enviar sugestão</h4>
+  <p class="hint">Compartilhe uma ideia, correção ou pedido de contato.</p>
+  <form id="suggestForm">
+    <label for="sg-nome">Nome</label>
+    <input id="sg-nome" name="nome" type="text" required autocomplete="name">
+
+    <label for="sg-email">E-mail</label>
+    <input id="sg-email" name="email" type="email" required autocomplete="email">
+
+    <label for="sg-fone">Telefone / WhatsApp</label>
+    <input id="sg-fone" name="telefone" type="tel" placeholder="(98) 9XXXX-XXXX" autocomplete="tel">
+
+    <label for="sg-msg">Mensagem</label>
+    <textarea id="sg-msg" name="mensagem" required></textarea>
+
+    <button type="submit" class="submit-btn">Enviar sugestão</button>
+    <p class="form-msg" id="suggestMsg" role="status" aria-live="polite" aria-atomic="true">Sugestão registrada por aqui — obrigado! (formulário de demonstração, ainda sem envio real)</p>
+  </form>
+</div>
+
+<!-- FIXED BOTTOM BAR -->
+<div class="bottom-bar">
+  <div class="socials">
+    <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram do laboratório">
+      <svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.58.01 4.85.07 1.17.05 1.97.24 2.43.4a4.9 4.9 0 0 1 1.77 1.15 4.9 4.9 0 0 1 1.15 1.77c.16.46.35 1.26.4 2.43.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.24 1.97-.4 2.43a4.9 4.9 0 0 1-1.15 1.77 4.9 4.9 0 0 1-1.77 1.15c-.46.16-1.26.35-2.43.4-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.97-.24-2.43-.4a4.9 4.9 0 0 1-1.77-1.15 4.9 4.9 0 0 1-1.15-1.77c-.16-.46-.35-1.26-.4-2.43C2.21 15.58 2.2 15.2 2.2 12s.01-3.58.07-4.85c.05-1.17.24-1.97.4-2.43a4.9 4.9 0 0 1 1.15-1.77A4.9 4.9 0 0 1 5.6 1.8c.46-.16 1.26-.35 2.43-.4C9.3 1.34 9.68 1.33 12 1.33m0 1.8c-3.16 0-3.5.01-4.74.07-.96.04-1.48.2-1.83.34-.46.18-.79.4-1.14.75-.35.35-.57.68-.75 1.14-.14.35-.3.87-.34 1.83C3.14 7.17 3.13 7.51 3.13 10.67v2.66c0 3.16.01 3.5.07 4.74.04.96.2 1.48.34 1.83.18.46.4.79.75 1.14.35.35.68.57 1.14.75.35.14.87.3 1.83.34 1.24.06 1.58.07 4.74.07s3.5-.01 4.74-.07c.96-.04 1.48-.2 1.83-.34.46-.18.79-.4 1.14-.75.35-.35.57-.68.75-1.14.14-.35.3-.87.34-1.83.06-1.24.07-1.58.07-4.74v-2.66c0-3.16-.01-3.5-.07-4.74-.04-.96-.2-1.48-.34-1.83a3.1 3.1 0 0 0-.75-1.14 3.1 3.1 0 0 0-1.14-.75c-.35-.14-.87-.3-1.83-.34C15.5 4.01 15.16 4 12 4Zm0 3.24a4.76 4.76 0 1 1 0 9.52 4.76 4.76 0 0 1 0-9.52Zm0 1.8a2.96 2.96 0 1 0 0 5.92 2.96 2.96 0 0 0 0-5.92Zm5.4-1.99a1.11 1.11 0 1 1-2.22 0 1.11 1.11 0 0 1 2.22 0Z"/></svg>
+    </a>
+    <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook do laboratório">
+      <svg viewBox="0 0 24 24"><path d="M14 13.5h2.5l.5-3.2h-3v-1.8c0-1.1.35-1.9 1.95-1.9H17V3.9c-.3-.05-1.28-.13-2.42-.13-2.4 0-4.05 1.46-4.05 4.15v2.35H8v3.2h2.53V21H14v-7.5Z"/></svg>
+    </a>
+  </div>
+  <button class="suggest-toggle" id="suggestToggle" aria-expanded="false" aria-controls="suggestPanel">
+    Sugestões
+    <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+</div>
+
+<script src="assets/js/main.js"></script>
+
+</body>
+</html>
+
+

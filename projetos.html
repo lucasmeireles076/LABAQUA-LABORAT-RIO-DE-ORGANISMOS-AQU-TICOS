@@ -1,0 +1,484 @@
+﻿?<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Projetos de Pesquisa | LabAqua — Laboratório de Organismos Aquáticos (UFMA)">
+<meta property="og:description" content="Projetos de pesquisa, banners e materiais de divulgação do LabAqua — Laboratório de Organismos Aquáticos (UFMA).">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="LOGO.png" type="image/png">
+<meta name="theme-color" content="#0F4C81">
+<title>Projetos de Pesquisa | LabAqua — Laboratório de Organismos Aquáticos (UFMA)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="assets/css/styles.css">
+.devpage{min-height:56vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 24px;}
+  .devpage .eyebrow{justify-content:center;display:flex;}
+  .devpage h1{font-size:clamp(26px,4vw,38px);margin:12px 0 14px;}
+  .devpage p{color:var(--ink-soft);max-width:480px;margin:0 auto 26px;font-size:15.5px;}
+
+  /* ============================================================
+     CARDS DE PROJETOS (texto flutuante, 2 colunas)
+     ============================================================ */
+  .project-cards{
+    display:grid;grid-template-columns:1fr 1fr;gap:22px;
+  }
+  .project-card{
+    background:var(--white);
+    border:1px solid var(--sand-dim);
+    border-radius:var(--radius-m);
+    padding:24px 22px;
+    box-shadow:0 10px 26px rgba(14,46,44,0.08);
+  }
+  .project-card ul{margin:0;padding-left:20px;}
+  .project-card li{
+    font-size:14.5px;color:var(--ink-soft);line-height:1.55;
+    margin-bottom:14px;
+  }
+  .project-card li:last-child{margin-bottom:0;}
+
+  @media (max-width:900px){
+    .project-cards{grid-template-columns:1fr;}
+  }
+
+  /* ============================================================
+     GALERIA DE BANNERS ("Projetos de Pesquisa")
+     ------------------------------------------------------------
+     .banner-grid   → grade responsiva (auto-fill) dos 7 cards.
+     .banner-card    → moldura branca com sombra; figcaption abaixo
+                       da imagem, como pedido.
+     .banner-trigger → botão sem estilo que envolve a imagem; é ele
+                       que recebe o hover (leve zoom + sombra) para
+                       sinalizar que é clicável, e o foco de teclado.
+     ============================================================ */
+  .banner-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));
+    gap:22px;
+  }
+  .banner-card{
+    margin:0;
+    background:var(--white);
+    border:1px solid var(--sand-dim);
+    border-radius:var(--radius-m);
+    overflow:hidden;
+    box-shadow:0 2px 8px rgba(14,46,44,0.06);
+    transition:box-shadow .22s ease, transform .22s ease;
+  }
+  .banner-card:hover{
+    box-shadow:0 14px 30px rgba(14,46,44,0.16);
+    transform:translateY(-4px);
+  }
+  .banner-trigger{
+    display:block;width:100%;padding:0;border:none;background:none;
+    cursor:pointer;
+  }
+  .banner-trigger img{
+    width:100%;aspect-ratio:4/5;object-fit:cover;
+    display:block;
+    transition:transform .35s ease;
+  }
+  .banner-card:hover .banner-trigger img{transform:scale(1.045);}
+  /* aparece no lugar da <img> quando o thumb ainda não foi enviado
+     (ver tratamento de erro no JS, função criarThumb) */
+  .banner-fallback{
+    width:100%;aspect-ratio:4/5;
+    display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(155deg, var(--ocean-mid), var(--seagrass) 78%);
+    color:rgba(255,253,249,0.8);
+    font-family:'IBM Plex Mono',monospace;font-size:12px;text-align:center;
+    padding:20px;line-height:1.5;
+  }
+  .banner-trigger:focus-visible{outline:3px solid var(--seagrass);outline-offset:-3px;}
+  .banner-card{position:relative;}
+  /* selo "PDF" no canto do card, só aparece quando o banner tem
+     um PDF de verdade associado (ver render em bannerGrid no JS) */
+  .banner-pdf-badge{
+    position:absolute;top:10px;right:10px;z-index:2;
+    background:rgba(14,46,44,0.85);color:var(--sand);
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;
+    letter-spacing:0.04em;
+    padding:4px 8px;border-radius:5px;
+    pointer-events:none;
+  }
+  .banner-card figcaption{
+    padding:14px 16px 18px;
+    font-size:14px;font-weight:600;color:var(--ocean-deep);
+    line-height:1.4;
+  }
+
+  /* ============================================================
+     LIGHTBOX / MODAL
+     ------------------------------------------------------------
+     Escondido via [hidden] até o JS remover o atributo e adicionar
+     a classe "open" (usada só para a transição de fade-in). O fundo
+     escuro (overlay) é o próprio elemento .lightbox — clicar nele
+     fora da <figure> fecha o modal (ver JS).
+     ============================================================ */
+  .lightbox{
+    position:fixed;inset:0;z-index:400;
+    background:rgba(10,26,25,0.92);
+    display:flex;align-items:center;justify-content:center;
+    padding:70px 20px;
+    opacity:0;transition:opacity .2s ease;
+  }
+  .lightbox.open{opacity:1;}
+  .lightbox[hidden]{display:none;}
+  .lb-content{
+    margin:0;max-width:min(880px, 90vw);max-height:100%;
+    display:flex;flex-direction:column;align-items:center;
+    text-align:center;
+  }
+  .lb-content img{
+    max-width:100%;max-height:72vh;
+    border-radius:8px;
+    box-shadow:0 20px 60px rgba(0,0,0,0.5);
+    background:var(--sand);
+  }
+  .lb-content figcaption{
+    color:var(--sand);font-size:14.5px;font-weight:600;margin-top:16px;
+  }
+  .lb-meta{
+    display:flex;align-items:center;gap:16px;margin-top:8px;
+  }
+  .lb-counter{
+    color:rgba(241,233,216,0.6);font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+  }
+  /* link "Abrir PDF completo" — escondido por padrão; o JS só o
+     mostra (display:inline-flex) quando o banner atual tem pdf */
+  .lb-pdf-link{
+    display:none;
+    align-items:center;gap:6px;
+    color:var(--seagrass-light);
+    font-size:12.5px;font-weight:600;
+    border:1px solid rgba(241,233,216,0.3);
+    border-radius:999px;padding:5px 12px;
+    transition:background .18s, color .18s;
+  }
+  .lb-pdf-link svg{width:14px;height:14px;}
+  .lb-pdf-link:hover{background:var(--seagrass-light);color:var(--ocean-deep);}
+  .lb-close, .lb-nav{
+    position:absolute;
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.18);
+    color:var(--sand);
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;
+    transition:background .18s;
+  }
+  .lb-close:hover, .lb-nav:hover{background:var(--seagrass);}
+  .lb-close{top:20px;right:20px;width:44px;height:44px;}
+  .lb-close svg{width:20px;height:20px;}
+  .lb-nav{top:50%;transform:translateY(-50%);width:52px;height:52px;}
+  .lb-nav svg{width:24px;height:24px;}
+  .lb-prev{left:16px;}
+  .lb-next{right:16px;}
+  .lb-close:focus-visible, .lb-nav:focus-visible{outline:2px solid var(--seagrass-light);outline-offset:2px;}
+
+  @media (max-width:640px){
+    .lb-nav{width:42px;height:42px;}
+    .lb-prev{left:6px;}
+    .lb-next{right:6px;}
+    .lightbox{padding:60px 8px;}
+  }
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="logo fade-up" href="index.html#inicio">
+      <img class="logo-img" src="LOGO.png" alt="LabAqua — Laboratório de Organismos Aquáticos">
+    </a>
+    <div class="header-right">
+      <div class="header-contact">
+        <a href="mailto:silvanunes@yahoo.com">silvanunes@yahoo.com</a>
+        <a href="tel:+5598981170808">(98) 98117-0808</a>
+      </div>
+      <a class="cv-link" href="http://lattes.cnpq.br/" target="_blank" rel="noopener">Currículo Lattes</a>
+    </div>
+  </div>
+</header>
+
+<nav class="main-nav" id="mainNav">
+  <div class="nav-inner">
+    <div class="nav-item"><a href="index.html#inicio">Início</a></div>
+
+    <div class="nav-item">
+      <button class="nav-top" aria-haspopup="true" aria-expanded="false">Jorge L. S. Nunes</button>
+      <div class="dropdown">
+        <a href="index.html#curriculo">Currículo</a>
+        <a href="index.html#contato">Contato</a>
+      </div>
+    </div>
+
+    <div class="nav-item"><a href="projetos.html">Projetos de Pesquisa</a></div>
+
+    <div class="nav-item">
+      <button class="nav-top" aria-haspopup="true" aria-expanded="false">Parceria</button>
+      <div class="dropdown">
+        <a href="parceria-alunos.html">Alunos</a>
+        <a href="parceria-pesquisadores.html">Pesquisadores</a>
+        <a href="parceria-grupo-estudo.html">Grupo de Estudo</a>
+      </div>
+    </div>
+
+    <div class="nav-item">
+      <button class="nav-top" aria-haspopup="true" aria-expanded="false">Produções</button>
+      <div class="dropdown">
+        <a href="producoes-artigos.html">Artigos Publicados</a>
+        <a href="producoes-livros.html">Livros Publicados</a>
+        <a href="producoes-capitulos.html">Capítulo de Livro</a>
+        <a href="producoes-monografia.html">Monografia / Dissertação / Tese</a>
+      </div>
+    </div>
+
+    <div class="nav-item"><a href="expedicoes.html">Expedições</a></div>
+  </div>
+</nav>
+
+<main>
+
+  <!-- ===== INTRO DA PÁGINA "PROJETOS DE PESQUISA" ===== -->
+  <section class="hero" style="padding:64px 0 24px;">
+    <div class="wrap hero-inner">
+      <span class="eyebrow fade-up">Projetos de Pesquisa</span>
+      <h1 class="fade-up d1">Banners e materiais de divulgação</h1>
+      <p class="lede fade-up d2">Folders e cartazes produzidos pelo LabAqua para educação ambiental, identificação de espécies e prevenção de acidentes com a fauna aquática do Maranhão. Clique em qualquer banner para ampliar.</p>
+    </div>
+  </section>
+
+  <!-- ===== LINHAS DE PESQUISA (2 cards de texto flutuantes) ===== -->
+  <section class="block" id="linhas-pesquisa">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Linhas de pesquisa</span>
+        <h2>Projetos do laboratório</h2>
+      </div>
+      <div class="project-cards">
+        <div class="project-card">
+          <ul>
+            <li>Bioincrustação e bioinvasão: prevenção e monitoramento de espécies não-nativas na costa brasileira</li>
+            <li>Promoção da saúde única com ênfase na educação em saúde e qualidade ambiental — uma estratégia de combate às doenças transmitidas por vetores (DTVs)</li>
+            <li>Tubarões e raias amazônicos na estrada: biodiversidade e conservação</li>
+            <li>Uso de BRUV (Baited Remote Underwater Video) como ferramenta não destrutiva para inventariar a ictiofauna do Parcel de Manuel Luiz (FAPEMA)</li>
+            <li>Mapeamento da incidência do peixe-serra (Pristis spp.) na costa norte do Brasil (WWF)</li>
+            <li>Projeto Budiões (Petrobrás Ambiental)</li>
+            <li>Global Shark Meat Trade (Shark Conservation Fund)</li>
+            <li>Projeto MicroMar</li>
+            <li>Taxonomia integrativa e ecologia de parasitos de peixes na costa amazônica brasileira</li>
+            <li>Impactos da bioacumulação de metais na saúde de tubarões e raias e os potenciais riscos à saúde humana</li>
+          </ul>
+        </div>
+        <div class="project-card">
+          <ul>
+            <li>Environmental impacts and changes over a remaining population of the largetooth sawfish in the Eastern Amazon</li>
+            <li>Etnoconhecimento e educação ambiental para a conservação de tubarões e raias em perigo de extinção no litoral amazônico maranhense (projeto encerrado)</li>
+            <li>Ecologia da comunidade de peixes do Golfão Maranhense (FAPEMA)</li>
+            <li>Estruturação da comunidade de peixes e aspectos reprodutivos de populações de espécies de importância econômica na bacia do rio Pindaré (FAPEMA)</li>
+            <li>Acidentes causados por animais aquáticos em comunidades pesqueiras tradicionais do estado do Maranhão: epidemiologia, aspectos clínicos e propostas terapêuticas e preventivas (FAPEMA)</li>
+            <li>Educação, divulgação e conservação da biodiversidade do litoral através de uma coleção didática (FAPEMA)</li>
+            <li>Identificação das áreas berçários e prioritárias para a conservação dos tubarões no litoral MA (FAPEMA)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       GALERIA DE BANNERS (clicável / lightbox / PDF original)
+       ------------------------------------------------------------
+       Otimização: em vez de repetir a mesma marcação 7 vezes, os
+       cards agora são gerados pelo JavaScript a partir de UM ÚNICO
+       lugar — a lista BANNERS, lá no bloco <script> no final deste arquivo.
+      ============================================================ -->
+ <script src="assets/js/main.js"></script>
+ <script>  // (4) GALERIA DE BANNERS — dados + grid + lightbox/modal
+  //     ------------------------------------------------------------
+  //     BANNERS é a ÚNICA fonte de dados dos 7 cards. O grid e o
+  //     lightbox são desenhados a partir dela — para trocar uma
+  //     imagem, texto ou adicionar o PDF que faltava, basta editar
+  //     o objeto correspondente aqui embaixo (nada de HTML repetido
+  //     pra manter sincronizado em vários lugares).
+  //
+  //     Campos de cada banner:
+  //       title → usado no figcaption, no alt da imagem e no aria
+  //       thumb → miniatura exibida no card do grid
+  //       full  → imagem grande exibida no lightbox
+  //       pdf   → caminho do PDF original completo, ou null se ainda
+  //               não tiver sido enviado (o card fica sem o selo
+  //               "PDF" e o lightbox esconde o link "Abrir PDF")
+  // ============================================================
+  const BANNERS = [
+    {
+      title: "Status de conservação de Elasmobrânquios e Fauna acompanhante da pesca de camarão",
+      thumb: "assets/banners/banner-elasmobranquios-thumb.jpg",
+      full:  "assets/banners/banner-elasmobranquios-full.jpg",
+      pdf:   "assets/pdfs/elasmobranquios.pdf"
+    },
+    {
+      title: "Banner Tubarões do Maranhão",
+      thumb: "assets/banners/banner-tubaroes-maranhao-thumb.jpg",
+      full:  "assets/banners/banner-tubaroes-maranhao-full.jpg",
+      pdf:   "assets/pdfs/banner-tubaroes-maranhao.pdf"
+    },
+    {
+      title: "Seja colaborador do Laboratório de Organismos Aquáticos",
+      thumb: "assets/banners/banner-seja-colaborador-thumb.jpg",
+      full:  "assets/banners/banner-seja-colaborador-full.jpg",
+      pdf:   "assets/pdfs/seja-colaborador.pdf"
+    },
+    {
+      title: "Banner Raias do Maranhão",
+      thumb: "assets/banners/banner-raias-maranhao-thumb.jpg",
+      full:  "assets/banners/banner-raias-maranhao-full.jpg",
+      pdf:   "assets/pdfs/banner-raias-maranhao.pdf"
+    },
+    {
+      title: "Acidentes causados por organismos de água doce",
+      thumb: "assets/banners/banner-acidentes-agua-doce-thumb.jpg",
+      full:  "assets/banners/banner-acidentes-agua-doce-full.jpg",
+      pdf:   "assets/pdfs/acidentes-agua-doce.pdf"
+    },
+    {
+      title: "Acidentes causados por organismos marinhos",
+      thumb: "assets/banners/banner-acidentes-marinhos-thumb.jpg",
+      full:  "assets/banners/banner-acidentes-marinhos-full.jpg",
+      pdf:   "assets/pdfs/acidentes-organismos-marinhos.pdf"
+    },
+    {
+      title: "Banner ISRA",
+      thumb: "assets/banners/banner-isra-thumb.jpg",
+      full:  "assets/banners/banner-isra-full.jpg",
+      pdf:   "assets/pdfs/banner-isra.pdf"
+    }
+  ];
+
+  // --- monta os 7 <figure class="banner-card"> dentro de #bannerGrid ---
+  const grid = document.getElementById('bannerGrid');
+  const cardButtons = [];
+
+  BANNERS.forEach((banner, index)=>{
+    const figure = document.createElement('figure');
+    figure.className = 'banner-card';
+
+    if(banner.pdf){
+      const badge = document.createElement('span');
+      badge.className = 'banner-pdf-badge';
+      badge.textContent = 'PDF';
+      badge.setAttribute('aria-hidden', 'true');
+      figure.appendChild(badge);
+    }
+
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'banner-trigger';
+    button.setAttribute('aria-label', 'Ampliar: ' + banner.title);
+
+    const img = document.createElement('img');
+    img.src = banner.thumb;
+    img.alt = banner.title;
+    img.loading = 'lazy';
+    // enquanto o thumb definitivo não chega, evita o ícone de imagem
+    // quebrada e mostra um bloco com o título do banner
+    img.addEventListener('error', ()=>{
+      const fallback = document.createElement('div');
+      fallback.className = 'banner-fallback';
+      fallback.textContent = banner.title;
+      img.replaceWith(fallback);
+    }, { once:true });
+    button.appendChild(img);
+    button.addEventListener('click', ()=> openLightbox(index, button));
+    cardButtons.push(button);
+
+    const figcaption = document.createElement('figcaption');
+    figcaption.textContent = banner.title;
+
+    figure.appendChild(button);
+    figure.appendChild(figcaption);
+    grid.appendChild(figure);
+  });
+
+  // --- lightbox: abrir/fechar/navegar, lendo direto de BANNERS ---
+  //     - Clicar num card abre o modal com a imagem em tamanho grande.
+  //     - Setas ← → trocam de banner sem fechar o modal.
+  //     - Esc, botão "X" ou clique fora da imagem fecham o modal.
+  //     - Quando o banner tem PDF, aparece o link "Abrir PDF completo".
+  //     - Ao fechar, o foco volta pro card que abriu o modal (bom pra
+  //       quem navega só com teclado/leitor de tela).
+  const lightbox   = document.getElementById('lightbox');
+  const lbImage    = document.getElementById('lbImage');
+  const lbCaption  = document.getElementById('lbCaption');
+  const lbCounter  = document.getElementById('lbCounter');
+  const lbPdfLink  = document.getElementById('lbPdfLink');
+  const lbClose    = document.getElementById('lbClose');
+  const lbPrev     = document.getElementById('lbPrev');
+  const lbNext     = document.getElementById('lbNext');
+
+  let currentIndex = 0;
+  let lastFocused  = null;
+
+  function renderSlide(index){
+    currentIndex = (index + BANNERS.length) % BANNERS.length;
+    const banner = BANNERS[currentIndex];
+    lbImage.style.display = '';
+    lbImage.src = banner.full;
+    lbImage.alt = banner.title;
+    // imagem grande ainda não enviada: some com o <img> pra não
+    // mostrar o ícone de imagem quebrada dentro do modal
+    lbImage.onerror = ()=>{ lbImage.style.display = 'none'; };
+    lbCaption.textContent = banner.title;
+    lbCounter.textContent = (currentIndex + 1) + ' / ' + BANNERS.length;
+
+    if(banner.pdf){
+      lbPdfLink.href = banner.pdf;
+      lbPdfLink.style.display = 'inline-flex';
+    } else {
+      lbPdfLink.removeAttribute('href');
+      lbPdfLink.style.display = 'none';
+    }
+  }
+
+  function openLightbox(index, triggerEl){
+    lastFocused = triggerEl || document.activeElement;
+    renderSlide(index);
+    lightbox.hidden = false;
+    // requestAnimationFrame garante que o navegador aplique o hidden
+    // antes de rodar a transição de opacidade (.open)
+    requestAnimationFrame(()=> lightbox.classList.add('open'));
+    document.body.style.overflow = 'hidden';
+    lbClose.focus();
+  }
+
+  function closeLightbox(){
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+    setTimeout(()=>{ lightbox.hidden = true; }, 200);
+    if(lastFocused) lastFocused.focus();
+  }
+
+  lbClose.addEventListener('click', closeLightbox);
+  lbPrev.addEventListener('click', ()=> renderSlide(currentIndex - 1));
+  lbNext.addEventListener('click', ()=> renderSlide(currentIndex + 1));
+
+  // Clicar no overlay (fora da figure/imagem) fecha o modal
+  lightbox.addEventListener('click', (e)=>{
+    if(e.target === lightbox) closeLightbox();
+  });
+
+  // Navegação por teclado: Esc fecha, ← → trocam de slide
+  document.addEventListener('keydown', (e)=>{
+    if(lightbox.hidden) return;
+    if(e.key === 'Escape') closeLightbox();
+    if(e.key === 'ArrowLeft') renderSlide(currentIndex - 1);
+    if(e.key === 'ArrowRight') renderSlide(currentIndex + 1);
+  });
+</script>
+
+</body>
+</html>
+
+

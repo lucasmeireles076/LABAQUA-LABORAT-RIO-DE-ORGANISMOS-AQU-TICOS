@@ -1,0 +1,16 @@
+# Copie este arquivo para "terraform.tfvars" e ajuste os valores.
+# terraform.tfvars NÃO deve ir para o Git (já está no .gitignore).
+
+project_name = "labaqua"
+aws_region   = "sa-east-1" # São Paulo
+
+# --- Domínio próprio (opcional) ---
+# Deixe as duas linhas abaixo comentadas/em branco para publicar só no
+# domínio padrão do CloudFront (ex.: https://d111111abcdef8.cloudfront.net).
+
+# domain_name    = "labaqua.ufma.br"
+# hosted_zone_id = "Z0123456789ABCDEFGHIJ"
+
+price_class    = "PriceClass_200"
+enable_waf     = true
+waf_rate_limit = 2000
