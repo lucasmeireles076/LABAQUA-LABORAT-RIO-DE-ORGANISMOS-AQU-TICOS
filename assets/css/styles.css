@@ -65,13 +65,36 @@ a:focus-visible, button:focus-visible{outline:2px solid var(--coral);outline-off
 .fade-up.d4{animation-delay:.5s;}
 @media (prefers-reduced-motion: reduce){.fade-up{opacity:1; animation:none;}}
 
-/* ===== PAGE TRANSITION ===== */
-@keyframes pageTransitionIn{from{opacity:0;}to{opacity:1;}}
-@keyframes pageTransitionOut{from{opacity:1;}to{opacity:0;}}
-body.page-loading{animation:pageTransitionOut .3s var(--ease-out) forwards;}
-body.page-enter{animation:pageTransitionIn .5s var(--ease-out) forwards;}
+/* ===== PAGE TRANSITIONS (nativas, entre documentos) =====
+   Usa a View Transitions API do navegador em vez de um fade por JS: o
+   navegador só troca a tela quando a página nova já está pronta/estilizada,
+   então nunca aparece HTML cru no meio do caminho. Onde não há suporte
+   (Firefox, Safari antigos), a navegação acontece normal, sem efeito —
+   progressive enhancement, sem risco de regressão. */
+@view-transition{
+  navigation:auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root){
+  animation-duration:.32s;
+  animation-timing-function:var(--ease-out);
+}
+
+/* Header, menu e barra inferior são idênticos entre páginas: em vez de
+   fazer crossfade neles também, o navegador os trata como um elemento só
+   que "continua" na tela — sobra crossfade apenas para o conteúdo (main),
+   que é a parte que de fato muda. */
+.site-header{view-transition-name:site-header;}
+.main-nav{view-transition-name:site-nav;}
+.bottom-bar{view-transition-name:site-bottombar;}
+
 @media (prefers-reduced-motion: reduce){
-  body.page-loading, body.page-enter{animation:none;}
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*){
+    animation:none !important;
+  }
 }
 
 /* ===== SCROLL REVEAL (seções abaixo da dobra) =====

@@ -115,42 +115,7 @@ if (suggestForm && suggestMsg) {
   });
 }
 
-/* ===== PAGE TRANSITION ===== */
-// Aplica fade in ao carregar a página
-document.addEventListener('DOMContentLoaded', () => {
-  document.body.classList.add('page-enter');
-  setTimeout(() => {
-    document.body.classList.remove('page-enter');
-  }, 500);
-});
-
-// Intercepta cliques em links internos para fade out
-document.addEventListener('click', (event) => {
-  const link = event.target.closest('a');
-  
-  if (!link) return;
-  
-  // Verifica se é um link interno (não abre em aba nova, não é externo)
-  const href = link.getAttribute('href');
-  const isInternal = href && 
-                    !href.startsWith('http') && 
-                    !href.startsWith('tel:') && 
-                    !href.startsWith('mailto:') &&
-                    !link.hasAttribute('target');
-  
-  if (isInternal) {
-    // Ignora se for link para âncora na mesma página
-    const currentPage = window.location.pathname;
-    const linkPage = new URL(href, window.location.origin).pathname;
-    
-    if (currentPage !== linkPage) {
-      event.preventDefault();
-      
-      // Fade out e navega
-      document.body.classList.add('page-loading');
-      setTimeout(() => {
-        window.location.href = href;
-      }, 300);
-    }
-  }
-});
+/* ===== PAGE TRANSITION =====
+   A transição entre páginas agora é feita pela View Transitions API nativa
+   (ver @view-transition em styles.css) — o navegador cuida do crossfade
+   sozinho, sem JS atrasando a navegação real com setTimeout. */

@@ -19,7 +19,7 @@ resource "aws_cloudfront_distribution" "site" {
   is_ipv6_enabled     = true
   default_root_object = "index.html"
   price_class         = var.price_class
-  aliases             = var.domain_name != "" ? [var.domain_name] : []
+  aliases             = var.domain_name != "" ? [var.domain_name, "www.${var.domain_name}"] : []
   web_acl_id          = var.enable_waf ? aws_wafv2_web_acl.site[0].arn : null
 
   origin {
