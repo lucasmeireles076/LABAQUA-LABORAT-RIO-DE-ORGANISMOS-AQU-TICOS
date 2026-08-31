@@ -23,14 +23,27 @@ variable "domain_name" {
 
 variable "hosted_zone_id" {
   description = <<-EOT
-    ID da Hosted Zone no Route 53 que já contém (ou vai conter) o domínio
-    acima. Obrigatório só se "domain_name" for preenchido. Se o domínio for
-    gerenciado fora da AWS (ex.: registro.br sem Route 53), deixe em branco
-    e aponte um CNAME/ALIAS manualmente no seu provedor de DNS para o
-    domínio do CloudFront (ver output "cloudfront_domain_name").
+    ID de uma Hosted Zone no Route 53 que já existe e já contém o domínio
+    acima. Só usado se "manage_dns_in_route53" for false — nesse caso deixe
+    em branco para gerenciar o DNS fora da AWS (ex.: registro.br) e apontar
+    manualmente para o CloudFront (ver output "cloudfront_domain_name").
   EOT
   type        = string
   default     = ""
+}
+
+variable "manage_dns_in_route53" {
+  description = <<-EOT
+    Se true, este Terraform cria e gerencia uma Hosted Zone própria no
+    Route 53 para "domain_name" (registros de validação do certificado,
+    apex + www apontando pro CloudFront). Depois de aplicar, é preciso
+    trocar os nameservers do domínio no provedor onde ele foi registrado
+    (ex.: registro.br) para os 4 nameservers do output "route53_name_servers".
+    Se false (padrão), o DNS continua fora da AWS e os apontamentos são
+    feitos manualmente — ver "hosted_zone_id" acima.
+  EOT
+  type        = bool
+  default     = false
 }
 
 variable "price_class" {

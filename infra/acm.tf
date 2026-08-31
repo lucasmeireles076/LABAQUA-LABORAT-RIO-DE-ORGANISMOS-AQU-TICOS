@@ -17,7 +17,7 @@ resource "aws_acm_certificate" "site" {
 # Validação automática via Route 53 — só roda se você também informou
 # hosted_zone_id (ou seja, o domínio é gerenciado dentro da própria AWS).
 resource "aws_route53_record" "cert_validation" {
-  for_each = var.domain_name != "" && var.hosted_zone_id != "" ? {
+  for_each = var.domain_name != "" && local.has_hosted_zone ? {
     for dvo in aws_acm_certificate.site[0].domain_validation_options : dvo.domain_name => {
       name   = dvo.resource_record_name
       record = dvo.resource_record_value
@@ -25,7 +25,7 @@ resource "aws_route53_record" "cert_validation" {
     }
   } : {}
 
-  zone_id = var.hosted_zone_id
+  zone_id = local.hosted_zone_id
   name    = each.value.name
   type    = each.value.type
   records = [each.value.record]
@@ -33,7 +33,7 @@ resource "aws_route53_record" "cert_validation" {
 }
 
 resource "aws_acm_certificate_validation" "site" {
-  count = var.domain_name != "" && var.hosted_zone_id != "" ? 1 : 0
+  count = var.domain_name != "" && local.has_hosted_zone ? 1 : 0
 
   provider                = aws.us_east_1
   certificate_arn         = aws_acm_certificate.site[0].arn
