@@ -332,6 +332,11 @@ footer a:hover{color:var(--white);}
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
   color:var(--sand);padding:24px;
 }
+/* .lb-empty define display:flex direto na classe, então o atributo
+   "hidden" sozinho (que só vale via UA stylesheet) não basta pra
+   escondê-la — sem isso, a moldura "Fotos em breve" ficava aparecendo
+   embaixo da foto real mesmo quando a expedição já tinha fotos. */
+.lb-empty[hidden]{display:none;}
 .lb-empty svg{width:34px;height:34px;fill:none;stroke:rgba(241,233,216,0.6);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
 .lb-empty strong{font-size:15px;}
 .lb-empty span{font-size:13px;color:rgba(241,233,216,0.65);font-family:'IBM Plex Mono',monospace;}
