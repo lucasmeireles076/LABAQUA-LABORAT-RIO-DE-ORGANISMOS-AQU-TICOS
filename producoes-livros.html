@@ -15,20 +15,22 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Livros Publicados | LabAqua — Laboratório de Organismos Aquáticos (UFMA)">
 <meta property="og:description" content="Livros publicados e organizados pelo LabAqua — Laboratório de Organismos Aquáticos (UFMA).">
+<meta property="og:image" content="LOGO.png">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="LOGO.png" type="image/png">
-<meta name="theme-color" content="#0F4C81">
+<link rel="icon" href="assets/logo-header.png" type="image/png">
+<meta name="theme-color" content="#0B5A80">
 <title>Livros Publicados | LabAqua — Laboratório de Organismos Aquáticos (UFMA)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="assets/css/styles.css">
+<style>
 /* ============================================================
      GRADE DE LIVROS PUBLICADOS (cards com capa + referência)
      ------------------------------------------------------------
      Card = link direto pro PDF quando o arquivo já foi anexado
      (abre em nova aba); sem arquivo ainda, o card fica sem link,
-     com aviso "aguardando arquivo" e tarja "Em breve" sobre a capa.
+     com aviso "Em breve" e tarja "Em breve" sobre a capa.
      Cada <img> tem fallback automático (gradiente com o título)
      caso o arquivo de thumb ainda não exista.
      ============================================================ */
@@ -133,20 +135,21 @@
   @media (max-width:560px){
     .book-grid{grid-template-columns:1fr;}
   }
+</style>
 </head>
 <body>
 
 <header class="site-header">
   <div class="header-inner">
     <a class="logo fade-up" href="index.html#inicio">
-      <img class="logo-img" src="LOGO.png" alt="LabAqua — Laboratório de Organismos Aquáticos">
+      <img class="logo-img" src="assets/logo-header.png" alt="LabAqua — Laboratório de Organismos Aquáticos">
     </a>
     <div class="header-right">
       <div class="header-contact">
         <a href="mailto:silvanunes@yahoo.com">silvanunes@yahoo.com</a>
         <a href="tel:+5598981170808">(98) 98117-0808</a>
       </div>
-      <a class="cv-link" href="http://lattes.cnpq.br/" target="_blank" rel="noopener">Currículo Lattes</a>
+      <a class="cv-link" href="http://lattes.cnpq.br/1899258151972278" target="_blank" rel="noopener">Currículo Lattes</a>
     </div>
   </div>
 </header>
@@ -177,10 +180,15 @@
         <a href="producoes-livros.html">Livros Publicados</a>
         <a href="producoes-capitulos.html">Capítulo de Livro</a>
         <a href="producoes-monografia.html">Monografia / Dissertação / Tese</a>
+        <a href="producoes-registros.html">Registros</a>
       </div>
     </div>
 
     <div class="nav-item"><a href="expedicoes.html">Expedições</a></div>
+
+    <div class="nav-item"><a href="blogs.html">Blogs</a></div>
+    <div class="nav-item"><a href="aplicativos.html">Aplicativos</a></div>
+    <div class="nav-item"><a href="pristis-tv.html">Pristis TV</a></div>
   </div>
 </nav>
 
@@ -202,12 +210,12 @@
 
         <div class="book-card fade-up">
           <div class="book-cover">
-            <span class="book-ribbon">Em breve</span>
-            <div class="book-fallback" style="display:flex;">Animais aquáticos perigosos do Brasil</div>
+            <img src="assets/livros/thumbs/01-animais-perigosos-thumb.jpg" alt="Animais aquáticos perigosos do Brasil" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="book-fallback">Animais aquáticos perigosos do Brasil</div>
           </div>
           <div class="book-info">
             <span class="book-title">Animais aquáticos perigosos do Brasil</span>
-            <span class="book-badge pending">aguardando arquivo</span>
+            <span class="book-badge pending">Em breve</span>
           </div>
         </div>
 
@@ -224,36 +232,25 @@
 
         <div class="book-card fade-up">
           <div class="book-cover">
-            <span class="book-ribbon">Em breve</span>
-            <div class="book-fallback" style="display:flex;">Peixes do Parque Nacional dos Lençóis Maranhenses</div>
+            <img src="assets/livros/thumbs/03-peixes-lencois-thumb.jpg" alt="Peixes do Parque Nacional dos Lençóis Maranhenses" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="book-fallback">Peixes do Parque Nacional dos Lençóis Maranhenses</div>
           </div>
           <div class="book-info">
             <span class="book-title">Peixes do Parque Nacional dos Lençóis Maranhenses</span>
-            <span class="book-badge pending">aguardando arquivo</span>
+            <span class="book-badge pending">Em breve</span>
           </div>
         </div>
 
         <a class="book-card fade-up" href="assets/livros/2016-marcelinho-2ed.pdf" target="_blank" rel="noopener">
           <div class="book-cover">
-            <img src="assets/livros/thumbs/04-marcelinho-2ed-thumb.jpg" alt="Marcelinho e seus porquês em sua primeira visita à praia — 2ª edição" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-            <div class="book-fallback">Marcelinho e seus porquês em sua primeira visita à praia — 2ª ed.</div>
+            <img src="assets/livros/thumbs/04-marcelinho-2ed-thumb.jpg" alt="Marcelinho e seus porquês em sua primeira visita à praia — livro infantil (2ª edição)" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="book-fallback">Marcelinho e seus porquês em sua primeira visita à praia — livro infantil</div>
           </div>
           <div class="book-info">
             <span class="book-title">Marcelinho e seus porquês em sua primeira visita à praia (livro infantil)</span>
-            <span class="book-badge ok">Baixar PDF</span>
+            <span class="book-badge download">📥 Baixar</span>
           </div>
         </a>
-
-        <div class="book-card fade-up">
-          <div class="book-cover">
-            <span class="book-ribbon">Em breve</span>
-            <div class="book-fallback" style="display:flex;">Marcelinho e seus porquês em sua primeira visita à praia — 1ª ed.</div>
-          </div>
-          <div class="book-info">
-            <span class="book-title">Marcelinho e seus porquês em sua primeira visita à praia (livro infantil)</span>
-            <span class="book-badge pending">aguardando arquivo</span>
-          </div>
-        </div>
 
         <a class="book-card fade-up" href="assets/livros/2013-biodiversidade-marinha-ilha-maranhao.pdf" target="_blank" rel="noopener">
           <div class="book-cover">
@@ -285,7 +282,7 @@
 
 <footer>
   <div class="wrap">
-    <span>© 2026 Laboratório de Ictiologia — UFMA</span>
+    <span>© 2026 LabAqua — Laboratório de Organismos Aquáticos (UFMA)</span>
     <span>silvanunes@yahoo.com · (98) 98117-0808</span>
   </div>
 </footer>

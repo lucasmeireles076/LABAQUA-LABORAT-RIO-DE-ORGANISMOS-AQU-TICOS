@@ -1,3 +1,22 @@
+// Revela seções abaixo da dobra (classe .reveal) conforme entram na tela.
+// Dispara uma única vez por elemento; sem IntersectionObserver, mostra tudo de imediato.
+const revealEls = document.querySelectorAll('.reveal');
+if (revealEls.length) {
+  if ('IntersectionObserver' in window) {
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach((el) => revealObserver.observe(el));
+  } else {
+    revealEls.forEach((el) => el.classList.add('in-view'));
+  }
+}
+
 const navButtons = document.querySelectorAll('.nav-item button.nav-top');
 
 navButtons.forEach((btn) => {
@@ -95,3 +114,43 @@ if (suggestForm && suggestMsg) {
     }, 4500);
   });
 }
+
+/* ===== PAGE TRANSITION ===== */
+// Aplica fade in ao carregar a página
+document.addEventListener('DOMContentLoaded', () => {
+  document.body.classList.add('page-enter');
+  setTimeout(() => {
+    document.body.classList.remove('page-enter');
+  }, 500);
+});
+
+// Intercepta cliques em links internos para fade out
+document.addEventListener('click', (event) => {
+  const link = event.target.closest('a');
+  
+  if (!link) return;
+  
+  // Verifica se é um link interno (não abre em aba nova, não é externo)
+  const href = link.getAttribute('href');
+  const isInternal = href && 
+                    !href.startsWith('http') && 
+                    !href.startsWith('tel:') && 
+                    !href.startsWith('mailto:') &&
+                    !link.hasAttribute('target');
+  
+  if (isInternal) {
+    // Ignora se for link para âncora na mesma página
+    const currentPage = window.location.pathname;
+    const linkPage = new URL(href, window.location.origin).pathname;
+    
+    if (currentPage !== linkPage) {
+      event.preventDefault();
+      
+      // Fade out e navega
+      document.body.classList.add('page-loading');
+      setTimeout(() => {
+        window.location.href = href;
+      }, 300);
+    }
+  }
+});

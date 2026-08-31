@@ -6,14 +6,16 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Projetos de Pesquisa | LabAqua — Laboratório de Organismos Aquáticos (UFMA)">
 <meta property="og:description" content="Projetos de pesquisa, banners e materiais de divulgação do LabAqua — Laboratório de Organismos Aquáticos (UFMA).">
+<meta property="og:image" content="LOGO.png">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="LOGO.png" type="image/png">
-<meta name="theme-color" content="#0F4C81">
+<link rel="icon" href="assets/logo-header.png" type="image/png">
+<meta name="theme-color" content="#0B5A80">
 <title>Projetos de Pesquisa | LabAqua — Laboratório de Organismos Aquáticos (UFMA)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="assets/css/styles.css">
+<style>
 .devpage{min-height:56vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 24px;}
   .devpage .eyebrow{justify-content:center;display:flex;}
   .devpage h1{font-size:clamp(26px,4vw,38px);margin:12px 0 14px;}
@@ -44,45 +46,39 @@
   }
 
   /* ============================================================
-     GALERIA DE BANNERS ("Projetos de Pesquisa")
+     GRADE DE BANNERS ("Projetos de Pesquisa")
      ------------------------------------------------------------
-     .banner-grid   → grade responsiva (auto-fill) dos 7 cards.
-     .banner-card    → moldura branca com sombra; figcaption abaixo
-                       da imagem, como pedido.
-     .banner-trigger → botão sem estilo que envolve a imagem; é ele
-                       que recebe o hover (leve zoom + sombra) para
-                       sinalizar que é clicável, e o foco de teclado.
+     .banner-grid   → grade simples responsiva (auto-fill) dos cards.
+     .banner-card    → capa (thumb) + título + dois botões: "Ver
+                       banner" (abre o lightbox compartilhado) e
+                       "Baixar banner" (baixa o PDF original, quando
+                       existir).
      ============================================================ */
   .banner-grid{
     display:grid;
-    grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));
+    grid-template-columns:repeat(auto-fill, minmax(240px, 1fr));
     gap:22px;
   }
   .banner-card{
-    margin:0;
     background:var(--white);
     border:1px solid var(--sand-dim);
     border-radius:var(--radius-m);
     overflow:hidden;
     box-shadow:0 2px 8px rgba(14,46,44,0.06);
     transition:box-shadow .22s ease, transform .22s ease;
+    display:flex;flex-direction:column;
   }
   .banner-card:hover{
     box-shadow:0 14px 30px rgba(14,46,44,0.16);
     transform:translateY(-4px);
   }
-  .banner-trigger{
-    display:block;width:100%;padding:0;border:none;background:none;
-    cursor:pointer;
+  .banner-cover{aspect-ratio:4/5;overflow:hidden;background:var(--sand-dim);}
+  .banner-cover img{
+    width:100%;height:100%;object-fit:cover;display:block;
+    transition:transform .5s var(--ease-out);
   }
-  .banner-trigger img{
-    width:100%;aspect-ratio:4/5;object-fit:cover;
-    display:block;
-    transition:transform .35s ease;
-  }
-  .banner-card:hover .banner-trigger img{transform:scale(1.045);}
-  /* aparece no lugar da <img> quando o thumb ainda não foi enviado
-     (ver tratamento de erro no JS, função criarThumb) */
+  .banner-card:hover .banner-cover img{transform:scale(1.045);}
+  /* aparece no lugar da <img> quando o thumb ainda não foi enviado */
   .banner-fallback{
     width:100%;aspect-ratio:4/5;
     display:flex;align-items:center;justify-content:center;
@@ -91,114 +87,40 @@
     font-family:'IBM Plex Mono',monospace;font-size:12px;text-align:center;
     padding:20px;line-height:1.5;
   }
-  .banner-trigger:focus-visible{outline:3px solid var(--seagrass);outline-offset:-3px;}
-  .banner-card{position:relative;}
-  /* selo "PDF" no canto do card, só aparece quando o banner tem
-     um PDF de verdade associado (ver render em bannerGrid no JS) */
-  .banner-pdf-badge{
-    position:absolute;top:10px;right:10px;z-index:2;
-    background:rgba(14,46,44,0.85);color:var(--sand);
-    font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;
-    letter-spacing:0.04em;
-    padding:4px 8px;border-radius:5px;
-    pointer-events:none;
+  .banner-info{padding:14px 16px 18px;display:flex;flex-direction:column;gap:12px;flex:1;}
+  .banner-info h4{font-size:14px;font-weight:600;color:var(--ocean-deep);line-height:1.4;}
+  .banner-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;}
+  .banner-btn{
+    flex:1;min-width:118px;display:inline-flex;align-items:center;justify-content:center;gap:6px;
+    padding:9px 10px;border-radius:999px;font-family:inherit;
+    font-weight:600;font-size:12.5px;text-align:center;
+    border:1.5px solid transparent;cursor:pointer;
+    transition:background .18s ease, color .18s ease, border-color .18s ease;
   }
-  .banner-card figcaption{
-    padding:14px 16px 18px;
-    font-size:14px;font-weight:600;color:var(--ocean-deep);
-    line-height:1.4;
-  }
+  .banner-btn svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
+  .banner-btn.view{background:var(--seagrass);color:var(--white);}
+  .banner-btn.view:hover{background:var(--ocean-deep);}
+  .banner-btn.download{background:var(--white);color:var(--ocean-deep);border-color:var(--sand-dim);}
+  .banner-btn.download:hover{background:var(--seagrass-light);border-color:var(--seagrass);}
+  .banner-btn:focus-visible{outline:2px solid var(--coral);outline-offset:2px;}
 
-  /* ============================================================
-     LIGHTBOX / MODAL
-     ------------------------------------------------------------
-     Escondido via [hidden] até o JS remover o atributo e adicionar
-     a classe "open" (usada só para a transição de fade-in). O fundo
-     escuro (overlay) é o próprio elemento .lightbox — clicar nele
-     fora da <figure> fecha o modal (ver JS).
-     ============================================================ */
-  .lightbox{
-    position:fixed;inset:0;z-index:400;
-    background:rgba(10,26,25,0.92);
-    display:flex;align-items:center;justify-content:center;
-    padding:70px 20px;
-    opacity:0;transition:opacity .2s ease;
-  }
-  .lightbox.open{opacity:1;}
-  .lightbox[hidden]{display:none;}
-  .lb-content{
-    margin:0;max-width:min(880px, 90vw);max-height:100%;
-    display:flex;flex-direction:column;align-items:center;
-    text-align:center;
-  }
-  .lb-content img{
-    max-width:100%;max-height:72vh;
-    border-radius:8px;
-    box-shadow:0 20px 60px rgba(0,0,0,0.5);
-    background:var(--sand);
-  }
-  .lb-content figcaption{
-    color:var(--sand);font-size:14.5px;font-weight:600;margin-top:16px;
-  }
-  .lb-meta{
-    display:flex;align-items:center;gap:16px;margin-top:8px;
-  }
-  .lb-counter{
-    color:rgba(241,233,216,0.6);font-family:'IBM Plex Mono',monospace;
-    font-size:12px;
-  }
-  /* link "Abrir PDF completo" — escondido por padrão; o JS só o
-     mostra (display:inline-flex) quando o banner atual tem pdf */
-  .lb-pdf-link{
-    display:none;
-    align-items:center;gap:6px;
-    color:var(--seagrass-light);
-    font-size:12.5px;font-weight:600;
-    border:1px solid rgba(241,233,216,0.3);
-    border-radius:999px;padding:5px 12px;
-    transition:background .18s, color .18s;
-  }
-  .lb-pdf-link svg{width:14px;height:14px;}
-  .lb-pdf-link:hover{background:var(--seagrass-light);color:var(--ocean-deep);}
-  .lb-close, .lb-nav{
-    position:absolute;
-    background:rgba(255,255,255,0.08);
-    border:1px solid rgba(255,255,255,0.18);
-    color:var(--sand);
-    border-radius:50%;
-    display:flex;align-items:center;justify-content:center;
-    cursor:pointer;
-    transition:background .18s;
-  }
-  .lb-close:hover, .lb-nav:hover{background:var(--seagrass);}
-  .lb-close{top:20px;right:20px;width:44px;height:44px;}
-  .lb-close svg{width:20px;height:20px;}
-  .lb-nav{top:50%;transform:translateY(-50%);width:52px;height:52px;}
-  .lb-nav svg{width:24px;height:24px;}
-  .lb-prev{left:16px;}
-  .lb-next{right:16px;}
-  .lb-close:focus-visible, .lb-nav:focus-visible{outline:2px solid var(--seagrass-light);outline-offset:2px;}
-
-  @media (max-width:640px){
-    .lb-nav{width:42px;height:42px;}
-    .lb-prev{left:6px;}
-    .lb-next{right:6px;}
-    .lightbox{padding:60px 8px;}
-  }
+  /* Estilos de .lightbox/.lb-* agora vivem em assets/css/styles.css
+     (compartilhados com expedições e o mosaico do coordenador na home). */
+</style>
 </head>
 <body>
 
 <header class="site-header">
   <div class="header-inner">
     <a class="logo fade-up" href="index.html#inicio">
-      <img class="logo-img" src="LOGO.png" alt="LabAqua — Laboratório de Organismos Aquáticos">
+      <img class="logo-img" src="assets/logo-header.png" alt="LabAqua — Laboratório de Organismos Aquáticos">
     </a>
     <div class="header-right">
       <div class="header-contact">
         <a href="mailto:silvanunes@yahoo.com">silvanunes@yahoo.com</a>
         <a href="tel:+5598981170808">(98) 98117-0808</a>
       </div>
-      <a class="cv-link" href="http://lattes.cnpq.br/" target="_blank" rel="noopener">Currículo Lattes</a>
+      <a class="cv-link" href="http://lattes.cnpq.br/1899258151972278" target="_blank" rel="noopener">Currículo Lattes</a>
     </div>
   </div>
 </header>
@@ -233,10 +155,15 @@
         <a href="producoes-livros.html">Livros Publicados</a>
         <a href="producoes-capitulos.html">Capítulo de Livro</a>
         <a href="producoes-monografia.html">Monografia / Dissertação / Tese</a>
+        <a href="producoes-registros.html">Registros</a>
       </div>
     </div>
 
     <div class="nav-item"><a href="expedicoes.html">Expedições</a></div>
+
+    <div class="nav-item"><a href="blogs.html">Blogs</a></div>
+    <div class="nav-item"><a href="aplicativos.html">Aplicativos</a></div>
+    <div class="nav-item"><a href="pristis-tv.html">Pristis TV</a></div>
   </div>
 </nav>
 
@@ -251,15 +178,43 @@
     </div>
   </section>
 
-  <!-- ===== LINHAS DE PESQUISA (2 cards de texto flutuantes) ===== -->
-  <section class="block" id="linhas-pesquisa">
+  <!-- ===== PROJETOS DE PESQUISA ATUAIS ===== -->
+  <section class="block" id="projetos-atuais">
     <div class="wrap">
-      <div class="section-head">
+      <div class="section-head reveal">
+        <span class="eyebrow">Projetos de pesquisa atuais</span>
+        <h2>Em desenvolvimento no laboratório</h2>
+      </div>
+      <div class="project-cards reveal-stagger">
+        <div class="project-card reveal">
+          <ul>
+            <li>Biodiversidade de organismos aquáticos do estado do Maranhão a partir do banco de dados do Laboratório de Organismos Aquáticos</li>
+            <li>Bioecologia integrativa de elasmobrânquios amazônicos: vulnerabilidade, conservação e respostas às mudanças ambientais</li>
+            <li>Bioincrustação e bioinvasão: prevenção e monitoramento de espécies não-nativas na costa brasileira</li>
+            <li>Biodiversidade de parasitos de peixes no estado do Maranhão, Brasil: uma ferramenta para avaliação da integridade de ecossistemas</li>
+          </ul>
+        </div>
+        <div class="project-card reveal">
+          <ul>
+            <li>Etnoconhecimento e educação ambiental para a conservação de tubarões e raias em perigo de extinção no litoral amazônico maranhense</li>
+            <li>Educação, divulgação e conservação da biodiversidade do litoral maranhense através de uma coleção didática</li>
+            <li>Promoção da saúde única com ênfase na educação em saúde e qualidade ambiental: uma estratégia de combate às doenças transmitidas por vetores (DTVs)</li>
+            <li>Tubarões e raias amazônicos na estrada: biodiversidade e conservação</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== LINHAS DE PESQUISA (2 cards de texto flutuantes) ===== -->
+  <section class="block alt" id="linhas-pesquisa">
+    <div class="wrap">
+      <div class="section-head reveal">
         <span class="eyebrow">Linhas de pesquisa</span>
         <h2>Projetos do laboratório</h2>
       </div>
-      <div class="project-cards">
-        <div class="project-card">
+      <div class="project-cards reveal-stagger">
+        <div class="project-card reveal">
           <ul>
             <li>Bioincrustação e bioinvasão: prevenção e monitoramento de espécies não-nativas na costa brasileira</li>
             <li>Promoção da saúde única com ênfase na educação em saúde e qualidade ambiental — uma estratégia de combate às doenças transmitidas por vetores (DTVs)</li>
@@ -273,7 +228,7 @@
             <li>Impactos da bioacumulação de metais na saúde de tubarões e raias e os potenciais riscos à saúde humana</li>
           </ul>
         </div>
-        <div class="project-card">
+        <div class="project-card reveal">
           <ul>
             <li>Environmental impacts and changes over a remaining population of the largetooth sawfish in the Eastern Amazon</li>
             <li>Etnoconhecimento e educação ambiental para a conservação de tubarões e raias em perigo de extinção no litoral amazônico maranhense (projeto encerrado)</li>
@@ -287,6 +242,41 @@
       </div>
     </div>
   </section>
+
+  <!-- ===== GRADE DE BANNERS ===== -->
+  <section class="block alt">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Materiais de divulgação</span>
+        <h2>Banners do laboratório</h2>
+      </div>
+      <div class="banner-grid" id="bannerGrid"></div>
+    </div>
+  </section>
+
+  <!-- ===== LIGHTBOX / VISUALIZAÇÃO AMPLIADA DO BANNER ===== -->
+  <div class="lightbox" id="lightbox" hidden>
+    <div class="lb-content">
+      <img id="lbImage" alt="">
+      <figcaption id="lbCaption"></figcaption>
+      <div class="lb-meta">
+        <span class="lb-counter" id="lbCounter"></span>
+        <a class="lb-pdf-link" id="lbPdfLink" href="#" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 15V3"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/></svg>
+          Baixar banner
+        </a>
+      </div>
+    </div>
+    <button class="lb-close" id="lbClose" aria-label="Fechar galeria">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <button class="lb-nav lb-prev" id="lbPrev" aria-label="Banner anterior">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="lb-nav lb-next" id="lbNext" aria-label="Próximo banner">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
 
   <!-- ============================================================
        GALERIA DE BANNERS (clicável / lightbox / PDF original)
@@ -305,12 +295,11 @@
   //     pra manter sincronizado em vários lugares).
   //
   //     Campos de cada banner:
-  //       title → usado no figcaption, no alt da imagem e no aria
+  //       title → usado no título do card, no alt da imagem e no aria
   //       thumb → miniatura exibida no card do grid
-  //       full  → imagem grande exibida no lightbox
-  //       pdf   → caminho do PDF original completo, ou null se ainda
-  //               não tiver sido enviado (o card fica sem o selo
-  //               "PDF" e o lightbox esconde o link "Abrir PDF")
+  //       full  → imagem grande exibida no lightbox ("Ver banner")
+  //       pdf   → caminho do PDF original, usado pelo botão "Baixar
+  //               banner"; se for null o card fica só com "Ver banner"
   // ============================================================
   const BANNERS = [
     {
@@ -357,31 +346,23 @@
     }
   ];
 
-  // --- monta os 7 <figure class="banner-card"> dentro de #bannerGrid ---
+  // --- monta os 7 <article class="banner-card"> dentro de #bannerGrid ---
   const grid = document.getElementById('bannerGrid');
-  const cardButtons = [];
+  const EYE_ICON = '<svg viewBox="0 0 24 24" fill="none"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg>';
+  const DOWNLOAD_ICON = '<svg viewBox="0 0 24 24" fill="none"><path d="M12 15V3"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/></svg>';
 
   BANNERS.forEach((banner, index)=>{
-    const figure = document.createElement('figure');
-    figure.className = 'banner-card';
+    const card = document.createElement('article');
+    card.className = 'banner-card';
 
-    if(banner.pdf){
-      const badge = document.createElement('span');
-      badge.className = 'banner-pdf-badge';
-      badge.textContent = 'PDF';
-      badge.setAttribute('aria-hidden', 'true');
-      figure.appendChild(badge);
-    }
-
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'banner-trigger';
-    button.setAttribute('aria-label', 'Ampliar: ' + banner.title);
+    const cover = document.createElement('div');
+    cover.className = 'banner-cover';
 
     const img = document.createElement('img');
     img.src = banner.thumb;
     img.alt = banner.title;
     img.loading = 'lazy';
+    img.decoding = 'async';
     // enquanto o thumb definitivo não chega, evita o ícone de imagem
     // quebrada e mostra um bloco com o título do banner
     img.addEventListener('error', ()=>{
@@ -390,16 +371,38 @@
       fallback.textContent = banner.title;
       img.replaceWith(fallback);
     }, { once:true });
-    button.appendChild(img);
-    button.addEventListener('click', ()=> openLightbox(index, button));
-    cardButtons.push(button);
+    cover.appendChild(img);
 
-    const figcaption = document.createElement('figcaption');
-    figcaption.textContent = banner.title;
+    const info = document.createElement('div');
+    info.className = 'banner-info';
 
-    figure.appendChild(button);
-    figure.appendChild(figcaption);
-    grid.appendChild(figure);
+    const h4 = document.createElement('h4');
+    h4.textContent = banner.title;
+
+    const actions = document.createElement('div');
+    actions.className = 'banner-actions';
+
+    const viewBtn = document.createElement('button');
+    viewBtn.type = 'button';
+    viewBtn.className = 'banner-btn view';
+    viewBtn.innerHTML = EYE_ICON + ' Ver banner';
+    viewBtn.addEventListener('click', ()=> openLightbox(index, viewBtn));
+    actions.appendChild(viewBtn);
+
+    if(banner.pdf){
+      const downloadBtn = document.createElement('a');
+      downloadBtn.className = 'banner-btn download';
+      downloadBtn.href = banner.pdf;
+      downloadBtn.download = '';
+      downloadBtn.innerHTML = DOWNLOAD_ICON + ' Baixar banner';
+      actions.appendChild(downloadBtn);
+    }
+
+    info.appendChild(h4);
+    info.appendChild(actions);
+    card.appendChild(cover);
+    card.appendChild(info);
+    grid.appendChild(card);
   });
 
   // --- lightbox: abrir/fechar/navegar, lendo direto de BANNERS ---
@@ -477,6 +480,53 @@
     if(e.key === 'ArrowRight') renderSlide(currentIndex + 1);
   });
 </script>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 LabAqua — Laboratório de Organismos Aquáticos (UFMA)</span>
+    <span>silvanunes@yahoo.com · (98) 98117-0808</span>
+  </div>
+</footer>
+
+<!-- SUGGESTION FORM PANEL -->
+<div class="suggest-panel" id="suggestPanel">
+  <h4>Enviar sugestão</h4>
+  <p class="hint">Compartilhe uma ideia, correção ou pedido de contato.</p>
+  <form id="suggestForm">
+    <label for="sg-nome">Nome</label>
+    <input id="sg-nome" name="nome" type="text" required autocomplete="name">
+
+    <label for="sg-email">E-mail</label>
+    <input id="sg-email" name="email" type="email" required autocomplete="email">
+
+    <label for="sg-fone">Telefone / WhatsApp</label>
+    <input id="sg-fone" name="telefone" type="tel" placeholder="(98) 9XXXX-XXXX" autocomplete="tel">
+
+    <label for="sg-msg">Mensagem</label>
+    <textarea id="sg-msg" name="mensagem" required></textarea>
+
+    <button type="submit" class="submit-btn">Enviar sugestão</button>
+    <p class="form-msg" id="suggestMsg" role="status" aria-live="polite" aria-atomic="true">Sugestão registrada por aqui — obrigado! (formulário de demonstração, ainda sem envio real)</p>
+  </form>
+</div>
+
+<!-- FIXED BOTTOM BAR -->
+<div class="bottom-bar">
+  <div class="socials">
+    <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram do laboratório">
+      <svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.58.01 4.85.07 1.17.05 1.97.24 2.43.4a4.9 4.9 0 0 1 1.77 1.15 4.9 4.9 0 0 1 1.15 1.77c.16.46.35 1.26.4 2.43.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.24 1.97-.4 2.43a4.9 4.9 0 0 1-1.15 1.77 4.9 4.9 0 0 1-1.77 1.15c-.46.16-1.26.35-2.43.4-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.97-.24-2.43-.4a4.9 4.9 0 0 1-1.77-1.15 4.9 4.9 0 0 1-1.15-1.77c-.16-.46-.35-1.26-.4-2.43C2.21 15.58 2.2 15.2 2.2 12s.01-3.58.07-4.85c.05-1.17.24-1.97.4-2.43a4.9 4.9 0 0 1 1.15-1.77A4.9 4.9 0 0 1 5.6 1.8c.46-.16 1.26-.35 2.43-.4C9.3 1.34 9.68 1.33 12 1.33m0 1.8c-3.16 0-3.5.01-4.74.07-.96.04-1.48.2-1.83.34-.46.18-.79.4-1.14.75-.35.35-.57.68-.75 1.14-.14.35-.3.87-.34 1.83C3.14 7.17 3.13 7.51 3.13 10.67v2.66c0 3.16.01 3.5.07 4.74.04.96.2 1.48.34 1.83.18.46.4.79.75 1.14.35.35.68.57 1.14.75.35.14.87.3 1.83.34 1.24.06 1.58.07 4.74.07s3.5-.01 4.74-.07c.96-.04 1.48-.2 1.83-.34.46-.18.79-.4 1.14-.75.35-.35.57-.68.75-1.14.14-.35.3-.87.34-1.83.06-1.24.07-1.58.07-4.74v-2.66c0-3.16-.01-3.5-.07-4.74-.04-.96-.2-1.48-.34-1.83a3.1 3.1 0 0 0-.75-1.14 3.1 3.1 0 0 0-1.14-.75c-.35-.14-.87-.3-1.83-.34C15.5 4.01 15.16 4 12 4Zm0 3.24a4.76 4.76 0 1 1 0 9.52 4.76 4.76 0 0 1 0-9.52Zm0 1.8a2.96 2.96 0 1 0 0 5.92 2.96 2.96 0 0 0 0-5.92Zm5.4-1.99a1.11 1.11 0 1 1-2.22 0 1.11 1.11 0 0 1 2.22 0Z"/></svg>
+    </a>
+    <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook do laboratório">
+      <svg viewBox="0 0 24 24"><path d="M14 13.5h2.5l.5-3.2h-3v-1.8c0-1.1.35-1.9 1.95-1.9H17V3.9c-.3-.05-1.28-.13-2.42-.13-2.4 0-4.05 1.46-4.05 4.15v2.35H8v3.2h2.53V21H14v-7.5Z"/></svg>
+    </a>
+  </div>
+  <button class="suggest-toggle" id="suggestToggle" aria-expanded="false" aria-controls="suggestPanel">
+    Sugestões
+    <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+</div>
 
 </body>
 </html>

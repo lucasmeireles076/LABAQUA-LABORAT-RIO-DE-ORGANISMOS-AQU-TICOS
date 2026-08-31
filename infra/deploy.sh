@@ -22,7 +22,15 @@ aws s3 sync "$SITE_DIR" "s3://$BUCKET" \
   --exclude ".git/*" \
   --exclude ".claude/*" \
   --exclude "*.tf" \
-  --exclude "*.tfvars*"
+  --exclude "*.tfvars*" \
+  --exclude "assets/Alunos/*" \
+  --exclude "assets/Pesquisadores/*" \
+  --exclude "assets/fotos Nunes/*" \
+  --exclude "assets/Expedições/*" \
+  --exclude "assets/Animais aquáticos perigosos do Brasil.jpg" \
+  --exclude "assets/Biodiversidade marinha da Ilha do Maranhão.jpg" \
+  --exclude "assets/Peixes do Parque Nacional dos Lençóis Maranhenses.jpg" \
+  --exclude "assets/Marcelinho e seus porquês em sua primeira visita à praia.webp"
 
 echo
 echo "Invalidando cache do CloudFront (pode levar alguns minutos para propagar)..."

@@ -6,32 +6,72 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Expedições | LabAqua — Laboratório de Organismos Aquáticos (UFMA)">
 <meta property="og:description" content="Campanhas de campo e expedições de coleta do LabAqua — Laboratório de Organismos Aquáticos (UFMA).">
+<meta property="og:image" content="LOGO.png">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="LOGO.png" type="image/png">
-<meta name="theme-color" content="#0F4C81">
+<link rel="icon" href="assets/logo-header.png" type="image/png">
+<meta name="theme-color" content="#0B5A80">
 <title>Expedições | LabAqua — Laboratório de Organismos Aquáticos (UFMA)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="assets/css/styles.css">
-.devpage{min-height:56vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 24px;}
-  .devpage .eyebrow{justify-content:center;display:flex;}
-  .devpage h1{font-size:clamp(26px,4vw,38px);margin:12px 0 14px;}
-  .devpage p{color:var(--ink-soft);max-width:480px;margin:0 auto 26px;font-size:15.5px;}
+<style>
+  /* ===== GRADE DE EXPEDIÇÕES ===== */
+  .expedition-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(260px, 1fr));gap:22px;}
+  .expedition-card{
+    background:var(--white);border:none;border-radius:var(--radius-m);
+    overflow:hidden;box-shadow:0 12px 26px rgba(14,46,44,0.08);
+    display:flex;flex-direction:column;
+    transition:box-shadow .22s ease, transform .22s ease;border:1px solid rgba(12,114,110,0.06);
+  }
+  .expedition-card:hover{box-shadow:0 20px 40px rgba(11,90,128,0.16);transform:translateY(-6px);border-color:rgba(12,114,110,0.12);}
+  .expedition-cover{
+    aspect-ratio:4/3;position:relative;overflow:hidden;border-radius:var(--radius-m) var(--radius-m) 0 0;
+    background:linear-gradient(155deg, var(--ocean-mid), var(--seagrass) 78%);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+    color:rgba(255,255,255,0.92);text-align:center;padding:20px;cursor:pointer;
+  }
+  .expedition-card:nth-child(3n+2) .expedition-cover{background:linear-gradient(155deg, var(--seagrass), var(--ocean-deep) 78%);}
+  .expedition-card:nth-child(3n+3) .expedition-cover{background:linear-gradient(155deg, var(--ocean-deep), var(--ocean-mid) 78%);}
+  .expedition-cover::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(45deg, rgba(255,255,255,0.05) 0 2px, transparent 2px 10px);pointer-events:none;}
+  .expedition-cover svg{width:32px;height:32px;fill:rgba(255,255,255,0.92);position:relative;z-index:1;}
+  .expedition-cover span{position:relative;z-index:1;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.04em;}
+  .expedition-cover img{width:100%;height:100%;object-fit:cover;display:block;position:relative;z-index:1;transition:transform .5s var(--ease-out);}
+  .expedition-card:hover .expedition-cover img{transform:scale(1.06);}
+  .expedition-info{padding:18px 20px 22px;display:flex;flex-direction:column;gap:10px;flex:1;}
+  .expedition-info h4{font-size:17px;}
+  .expedition-info p{font-size:14px;color:var(--ink-soft);margin:0;flex:1;}
+  .expedition-photo-btn{
+    align-self:flex-start;display:inline-flex;align-items:center;gap:9px;
+    padding:12px 24px;background:linear-gradient(135deg, var(--ocean-deep), var(--seagrass));color:var(--white);border:none;
+    border-radius:999px;font-weight:700;font-size:13.5px;transition:all .2s ease;box-shadow:0 8px 16px rgba(11,90,128,0.18);
+    cursor:pointer;position:relative;overflow:hidden;text-transform:uppercase;letter-spacing:0.02em;
+  }
+  .expedition-photo-btn::before{content:"";position:absolute;inset:0;background:rgba(255,255,255,0.15);opacity:0;transition:opacity .2s;border-radius:999px;}
+  .expedition-photo-btn:hover{background:linear-gradient(135deg, var(--seagrass), var(--ocean-mid));transform:translateY(-2px);box-shadow:0 12px 24px rgba(11,90,128,0.26);}
+  .expedition-photo-btn:hover::before{opacity:1;}
+  .expedition-photo-btn:active{transform:translateY(0);}
+  .expedition-photo-btn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s;flex-shrink:0;}
+  .expedition-photo-btn:hover svg{transform:translateX(3px);}
+  @media (max-width:900px){.expedition-grid{grid-template-columns:1fr;}}
+
+  /* Estilos de .lightbox/.lb-* agora vivem em assets/css/styles.css
+     (compartilhados com projetos e o mosaico do coordenador na home). */
+</style>
 </head>
 <body>
 
 <header class="site-header">
   <div class="header-inner">
     <a class="logo fade-up" href="index.html#inicio">
-      <img class="logo-img" src="LOGO.png" alt="LabAqua — Laboratório de Organismos Aquáticos">
+      <img class="logo-img" src="assets/logo-header.png" alt="LabAqua — Laboratório de Organismos Aquáticos">
     </a>
     <div class="header-right">
       <div class="header-contact">
         <a href="mailto:silvanunes@yahoo.com">silvanunes@yahoo.com</a>
         <a href="tel:+5598981170808">(98) 98117-0808</a>
       </div>
-      <a class="cv-link" href="http://lattes.cnpq.br/" target="_blank" rel="noopener">Currículo Lattes</a>
+      <a class="cv-link" href="http://lattes.cnpq.br/1899258151972278" target="_blank" rel="noopener">Currículo Lattes</a>
     </div>
   </div>
 </header>
@@ -66,25 +106,67 @@
         <a href="producoes-livros.html">Livros Publicados</a>
         <a href="producoes-capitulos.html">Capítulo de Livro</a>
         <a href="producoes-monografia.html">Monografia / Dissertação / Tese</a>
+        <a href="producoes-registros.html">Registros</a>
       </div>
     </div>
 
     <div class="nav-item"><a href="expedicoes.html">Expedições</a></div>
+
+    <div class="nav-item"><a href="blogs.html">Blogs</a></div>
+    <div class="nav-item"><a href="aplicativos.html">Aplicativos</a></div>
+    <div class="nav-item"><a href="pristis-tv.html">Pristis TV</a></div>
   </div>
 </nav>
 
 <main>
-  <section class="devpage fade-up">
-    <span class="eyebrow">Expedições</span>
-    <h1>Página em desenvolvimento.</h1>
-    <p>Estamos preparando o conteúdo de <strong>Expedições</strong>. Volte em breve para conferir as novidades.</p>
-    <a class="btn-outline" href="index.html#inicio">← Voltar para o início</a>
+
+  <!-- ===== INTRO DA PÁGINA "EXPEDIÇÕES" ===== -->
+  <section class="hero" style="padding:64px 0 24px;">
+    <div class="wrap hero-inner">
+      <span class="eyebrow fade-up">Expedições</span>
+      <h1 class="fade-up d1">Campanhas de campo</h1>
+      <p class="lede fade-up d2">Expedições de coleta e pesquisa realizadas pelo LabAqua no litoral maranhense e na costa amazônica. Clique em "Ver fotos" para abrir a galeria de cada expedição.</p>
+    </div>
   </section>
+
+  <!-- ===== GRADE DE EXPEDIÇÕES ===== -->
+  <section class="block alt">
+    <div class="wrap">
+      <div class="expedition-grid" id="expeditionGrid"></div>
+    </div>
+  </section>
+
+  <!-- ===== LIGHTBOX / GALERIA DE FOTOS DA EXPEDIÇÃO ===== -->
+  <div class="lightbox" id="lightbox" hidden>
+    <div class="lb-content">
+      <img id="lbImage" alt="" hidden>
+      <div class="lb-empty" id="lbEmpty">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"/><circle cx="12" cy="13" r="3"/></svg>
+        <strong>Fotos em breve</strong>
+        <span>A galeria desta expedição está sendo preparada.</span>
+      </div>
+      <figcaption id="lbCaption"></figcaption>
+      <div class="lb-meta">
+        <span class="lb-counter" id="lbCounter"></span>
+      </div>
+      <div class="lb-thumbs" id="lbThumbs" aria-label="Miniaturas da galeria"></div>
+    </div>
+    <button class="lb-close" id="lbClose" aria-label="Fechar galeria">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <button class="lb-nav lb-prev" id="lbPrev" aria-label="Foto anterior">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="lb-nav lb-next" id="lbNext" aria-label="Próxima foto">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+
 </main>
 
 <footer>
   <div class="wrap">
-    <span>© 2026 Laboratório de Ictiologia — UFMA</span>
+    <span>© 2026 LabAqua — Laboratório de Organismos Aquáticos (UFMA)</span>
     <span>silvanunes@yahoo.com · (98) 98117-0808</span>
   </div>
 </footer>
@@ -128,7 +210,181 @@
 </div>
 
 <script src="assets/js/main.js"></script>
+<script>
+  // Fonte única de dados dos cards. Quando as fotos de cada expedição
+  // chegarem, basta preencher o array "photos" (caminhos das imagens)
+  // que a galeria/lightbox passa a exibi-las automaticamente.
+  function photoSet(slug, count) {
+    const list = [];
+    for (let i = 1; i <= count; i++) {
+      list.push('assets/photos/expedicoes/' + slug + '/' + String(i).padStart(2, '0') + '.jpg');
+    }
+    return list;
+  }
 
+  const EXPEDICOES = [
+    {
+      title: "Expedição Resex",
+      desc: "Campanha de campo em Reserva Extrativista do litoral maranhense.",
+      cover: "assets/photos/expedicoes/resex-cover.jpg",
+      photos: photoSet('resex', 7)
+    },
+    {
+      title: "Expedição Raposa",
+      desc: "Campanha de campo no município de Raposa, Maranhão.",
+      cover: "assets/photos/expedicoes/raposa-cover.jpg",
+      photos: photoSet('raposa', 13)
+    },
+    {
+      title: "Expedição Amapá",
+      desc: "Campanha de campo no litoral amapaense.",
+      cover: "assets/photos/expedicoes/amapa-cover.jpg",
+      photos: photoSet('amapa', 5)
+    },
+    {
+      title: "Expedição Baixada Maranhense",
+      desc: "Campanha de campo na Baixada Maranhense.",
+      cover: "assets/photos/expedicoes/baixada-maranhense-cover.jpg",
+      photos: photoSet('baixada-maranhense', 3)
+    }
+  ];
+
+  const grid = document.getElementById('expeditionGrid');
+
+  EXPEDICOES.forEach((exp, index) => {
+    const card = document.createElement('article');
+    card.className = 'expedition-card fade-up';
+
+    const cover = document.createElement('div');
+    cover.className = 'expedition-cover';
+    if (exp.cover) {
+      const coverImg = document.createElement('img');
+      coverImg.src = exp.cover;
+      coverImg.alt = exp.title;
+      coverImg.loading = 'lazy';
+      coverImg.decoding = 'async';
+      // sem o thumb ainda: volta pro selo com ícone + título
+      coverImg.addEventListener('error', () => {
+        cover.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 2 2 7l10 5 10-5-10-5Zm0 7L2 14l10 5 10-5-10-5Z"/></svg><span>' + exp.title.toUpperCase() + '</span>';
+      }, { once: true });
+      cover.appendChild(coverImg);
+    } else {
+      cover.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 2 2 7l10 5 10-5-10-5Zm0 7L2 14l10 5 10-5-10-5Z"/></svg><span>' + exp.title.toUpperCase() + '</span>';
+    }
+
+    const info = document.createElement('div');
+    info.className = 'expedition-info';
+
+    const h4 = document.createElement('h4');
+    h4.textContent = exp.title;
+
+    const p = document.createElement('p');
+    p.textContent = exp.desc;
+
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'expedition-photo-btn';
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"/><circle cx="12" cy="13" r="3"/></svg> Ver fotos';
+    btn.addEventListener('click', () => openGallery(index, btn));
+
+    info.appendChild(h4);
+    info.appendChild(p);
+    info.appendChild(btn);
+    card.appendChild(cover);
+    card.appendChild(info);
+    grid.appendChild(card);
+  });
+
+  // --- lightbox: mesma lógica de abrir/fechar/navegar usada em Projetos ---
+  const lightbox  = document.getElementById('lightbox');
+  const lbImage   = document.getElementById('lbImage');
+  const lbEmpty   = document.getElementById('lbEmpty');
+  const lbCaption = document.getElementById('lbCaption');
+  const lbCounter = document.getElementById('lbCounter');
+  const lbThumbs  = document.getElementById('lbThumbs');
+  const lbClose   = document.getElementById('lbClose');
+  const lbPrev    = document.getElementById('lbPrev');
+  const lbNext    = document.getElementById('lbNext');
+
+  let currentExpedition = 0;
+  let currentPhoto = 0;
+  let lastFocused = null;
+
+  function renderThumbs() {
+    const exp = EXPEDICOES[currentExpedition];
+    lbThumbs.innerHTML = '';
+
+    if (!exp || !exp.photos.length) return;
+
+    exp.photos.forEach((src, index) => {
+      const thumbBtn = document.createElement('button');
+      thumbBtn.type = 'button';
+      thumbBtn.className = 'lb-thumb' + (index === currentPhoto ? ' active' : '');
+      thumbBtn.setAttribute('aria-label', 'Abrir foto ' + (index + 1));
+      thumbBtn.innerHTML = '<img src="' + src + '" alt="' + exp.title + ' foto ' + (index + 1) + '" loading="lazy">';
+      thumbBtn.addEventListener('click', () => {
+        currentPhoto = index;
+        renderPhoto();
+      });
+      lbThumbs.appendChild(thumbBtn);
+    });
+  }
+
+  function renderPhoto() {
+    const exp = EXPEDICOES[currentExpedition];
+    const hasPhotos = exp && exp.photos.length > 0;
+
+    lbImage.hidden = !hasPhotos;
+    lbEmpty.hidden = hasPhotos;
+    lbPrev.hidden = !hasPhotos || exp.photos.length < 2;
+    lbNext.hidden = !hasPhotos || exp.photos.length < 2;
+
+    if (hasPhotos) {
+      currentPhoto = (currentPhoto + exp.photos.length) % exp.photos.length;
+      lbImage.src = exp.photos[currentPhoto];
+      lbImage.alt = exp.title + ' — foto ' + (currentPhoto + 1);
+      lbCounter.textContent = (currentPhoto + 1) + ' / ' + exp.photos.length;
+      renderThumbs();
+    } else {
+      lbCounter.textContent = '';
+      lbThumbs.innerHTML = '';
+    }
+    lbCaption.textContent = exp.title;
+  }
+
+  function openGallery(index, triggerEl) {
+    lastFocused = triggerEl || document.activeElement;
+    currentExpedition = index;
+    currentPhoto = 0;
+    renderPhoto();
+    lightbox.hidden = false;
+    requestAnimationFrame(() => lightbox.classList.add('open'));
+    document.body.style.overflow = 'hidden';
+    lbClose.focus();
+  }
+
+  function closeGallery() {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+    setTimeout(() => { lightbox.hidden = true; }, 200);
+    if (lastFocused) lastFocused.focus();
+  }
+
+  lbClose.addEventListener('click', closeGallery);
+  lbPrev.addEventListener('click', () => { currentPhoto--; renderPhoto(); });
+  lbNext.addEventListener('click', () => { currentPhoto++; renderPhoto(); });
+
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeGallery();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (lightbox.hidden) return;
+    if (e.key === 'Escape') closeGallery();
+    if (e.key === 'ArrowLeft') { currentPhoto--; renderPhoto(); }
+    if (e.key === 'ArrowRight') { currentPhoto++; renderPhoto(); }
+  });
+</script>
 
 </body>
 </html>
