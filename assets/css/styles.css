@@ -282,11 +282,10 @@ footer a:hover{color:var(--white);}
 /* ===== CRÉDITO "DESENVOLVIDO POR" =====
    Injetado pelo main.js (mesmo padrão do hambúrguer mobile) — discreto,
    no canto oposto ao botão de sugestões. */
-.dev-credit{position:fixed;left:24px;bottom:24px;z-index:300;display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-soft);}
-.dev-credit a{display:inline-flex;align-items:center;gap:5px;color:var(--ink-soft);font-weight:600;transition:color .18s;}
-.dev-credit a:hover{color:var(--seagrass);}
+.dev-credit{display:flex;align-items:center;gap:6px;}
+.dev-credit a{display:inline-flex;align-items:center;gap:5px;color:var(--sand-dim);font-weight:600;transition:color .18s;}
+.dev-credit a:hover{color:var(--white);}
 .dev-credit svg{width:15px;height:15px;flex-shrink:0;}
-@media (max-width:640px){.dev-credit{left:14px;bottom:14px;font-size:10.5px;}.dev-credit span{display:none;}}
 .bottom-bar .suggest-toggle{
   background:linear-gradient(135deg, var(--ocean-deep), var(--seagrass));
   color:var(--white);border:none;padding:15px 28px;border-radius:999px;
