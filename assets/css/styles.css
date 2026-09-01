@@ -282,9 +282,18 @@ footer a:hover{color:var(--white);}
 /* ===== CRÉDITO "DESENVOLVIDO POR" =====
    Injetado pelo main.js (mesmo padrão do hambúrguer mobile) — discreto,
    no canto oposto ao botão de sugestões. */
-.dev-credit{display:flex;align-items:center;gap:6px;}
-.dev-credit a{display:inline-flex;align-items:center;gap:5px;color:var(--sand-dim);font-weight:600;transition:color .18s;}
-.dev-credit a:hover{color:var(--white);}
+.dev-credit{
+  /* >>> AJUSTE AQUI a cor e a opacidade do crédito "Desenvolvido por" <<<
+     --dev-credit-color   : qualquer cor CSS (nome, hex, var(--...) etc.)
+     --dev-credit-opacity : 0 (invisível) até 1 (100% sólido) */
+  --dev-credit-color:var(--white);
+  --dev-credit-opacity:0.95;
+  display:flex;align-items:center;gap:6px;
+  color:var(--dev-credit-color);
+  opacity:var(--dev-credit-opacity);
+}
+.dev-credit a{display:inline-flex;align-items:center;gap:5px;color:var(--dev-credit-color);font-weight:600;transition:opacity .18s;}
+.dev-credit a:hover{opacity:0.75;}
 .dev-credit svg{width:15px;height:15px;flex-shrink:0;}
 .bottom-bar .suggest-toggle{
   background:linear-gradient(135deg, var(--ocean-deep), var(--seagrass));
