@@ -15,7 +15,7 @@
   --radius-m:14px;
   --header-h:76px;
   --nav-h:61px;
-  --bar-h:100px;
+  --bar-h:84px; /* respiro reservado no rodapé pro botão flutuante "Sugestões" não cobrir o texto */
   --ease-out:cubic-bezier(.16,.84,.44,1);
   --trans-fast:0.15s ease;
   --trans-smooth:0.22s ease;
@@ -266,10 +266,10 @@ section.block.alt{background:rgba(255,255,255,0.72);}
 .card-link.ghost:hover{background:var(--seagrass-light);border-color:var(--seagrass);}
 .card-link.ghost:hover .go{color:var(--ocean-deep);}
 
-/* Padding vertical em 80% do valor original (era 40px) — o "+ var(--bar-h)"
-   continua igual, é só o respiro reservado pro botão flutuante de
-   Sugestões não cobrir o rodapé, não faz parte da "altura visual" dele. */
-footer{background:var(--ocean-deep);color:var(--sand-dim);padding:32px 0 calc(32px + var(--bar-h));}
+/* Padding vertical menor e simétrico (24px nos dois lados) pra acompanhar
+   o crédito mais discreto; "+ var(--bar-h)" é só o respiro reservado pro
+   botão flutuante de Sugestões não cobrir o rodapé, não é "altura visual". */
+footer{background:var(--ocean-deep);color:var(--sand-dim);padding:24px 0 calc(24px + var(--bar-h));}
 footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;font-size:13px;}
 footer a:hover{color:var(--white);}
 
@@ -294,7 +294,7 @@ footer a:hover{color:var(--white);}
      --dev-credit-opacity : 0 (invisível) até 1 (75% sólido) */
   --dev-credit-color:var(--white);
   --dev-credit-opacity:0.35;
-  max-width:1180px;margin:10px auto 0;padding:0 32px;
+  max-width:1180px;margin:6px auto 0;padding:0 32px;
   display:flex;align-items:center;justify-content:flex-start;gap:3px;
   font-size:10.5px;
   color:var(--dev-credit-color);
