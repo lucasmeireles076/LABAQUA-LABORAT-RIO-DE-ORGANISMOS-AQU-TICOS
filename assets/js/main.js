@@ -17,6 +17,48 @@ if (revealEls.length) {
   }
 }
 
+/* ===== MENU MOBILE (hambúrguer lateral) =====
+   Injeta o botão e o overlay via JS (em vez de editar o HTML de cada
+   página) — main.js já é compartilhado por todas elas. */
+const headerRight = document.querySelector('.header-right');
+const mainNav = document.getElementById('mainNav');
+if (headerRight && mainNav) {
+  const hamburger = document.createElement('button');
+  hamburger.type = 'button';
+  hamburger.className = 'nav-hamburger';
+  hamburger.setAttribute('aria-label', 'Abrir menu');
+  hamburger.setAttribute('aria-controls', 'mainNav');
+  hamburger.setAttribute('aria-expanded', 'false');
+  hamburger.innerHTML = '<svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>';
+  headerRight.appendChild(hamburger);
+
+  const navOverlay = document.createElement('div');
+  navOverlay.className = 'nav-overlay';
+  document.body.appendChild(navOverlay);
+
+  const closeMobileNav = () => {
+    mainNav.classList.remove('open');
+    navOverlay.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  };
+  const openMobileNav = () => {
+    mainNav.classList.add('open');
+    navOverlay.classList.add('open');
+    hamburger.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  };
+
+  hamburger.addEventListener('click', (event) => {
+    event.stopPropagation();
+    mainNav.classList.contains('open') ? closeMobileNav() : openMobileNav();
+  });
+  navOverlay.addEventListener('click', closeMobileNav);
+  mainNav.querySelectorAll('a').forEach((a) => a.addEventListener('click', closeMobileNav));
+  window.addEventListener('resize', () => { if (window.innerWidth > 900) closeMobileNav(); });
+  document.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeMobileNav(); });
+}
+
 const navButtons = document.querySelectorAll('.nav-item button.nav-top');
 
 navButtons.forEach((btn) => {

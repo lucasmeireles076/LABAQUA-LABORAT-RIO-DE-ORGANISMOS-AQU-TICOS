@@ -315,7 +315,7 @@ footer a:hover{color:var(--white);}
   opacity:0;transition:opacity .2s ease;
 }
 .lb-thumbs{
-  display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:16px;max-width:760px;
+  display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:8px;max-width:760px;
 }
 .lb-thumb{
   width:72px;height:52px;border:2px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.04);padding:0;border-radius:8px;overflow:hidden;cursor:pointer;transition:border-color .18s ease, transform .18s ease;
@@ -340,8 +340,8 @@ footer a:hover{color:var(--white);}
 .lb-empty svg{width:34px;height:34px;fill:none;stroke:rgba(241,233,216,0.6);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
 .lb-empty strong{font-size:15px;}
 .lb-empty span{font-size:13px;color:rgba(241,233,216,0.65);font-family:'IBM Plex Mono',monospace;}
-.lb-content figcaption{color:var(--sand);font-size:14.5px;font-weight:600;margin-top:16px;}
-.lb-meta{display:flex;align-items:center;gap:16px;margin-top:8px;}
+.lb-content figcaption{color:var(--sand);font-size:14.5px;font-weight:600;margin-top:8px;}
+.lb-meta{display:flex;align-items:center;gap:16px;margin-top:4px;}
 .lb-counter{color:rgba(241,233,216,0.6);font-family:'IBM Plex Mono',monospace;font-size:12px;}
 /* link "Abrir PDF completo" — escondido por padrão; o JS só o mostra
    (display:inline-flex) quando o item atual tem pdf associado */
@@ -414,6 +414,33 @@ footer a:hover{color:var(--white);}
   .cards3{grid-template-columns:1fr;}
   .hero h1{font-size:clamp(32px,8vw,44px);}
   .hero p.lede{text-align:center;margin-left:auto;margin-right:auto;}
+}
+
+/* ===== MENU MOBILE (hambúrguer + gaveta lateral) =====
+   O botão e o overlay são injetados pelo main.js (não existem no HTML das
+   páginas) — aqui só definimos a aparência e o estado ".open". */
+.nav-hamburger{display:none;background:none;border:none;color:var(--ocean-deep);width:40px;height:40px;align-items:center;justify-content:center;cursor:pointer;border-radius:8px;flex-shrink:0;}
+.nav-hamburger:hover{background:var(--sand-dim);}
+.nav-hamburger svg{width:24px;height:24px;}
+.nav-overlay{position:fixed;inset:var(--header-h) 0 0 0;background:rgba(10,26,25,0.5);z-index:180;opacity:0;visibility:hidden;transition:opacity .25s ease, visibility .25s;}
+.nav-overlay.open{opacity:1;visibility:visible;}
+
+@media (max-width:900px){
+  .nav-hamburger{display:flex;}
+  nav.main-nav{
+    position:fixed;top:var(--header-h);left:0;right:auto;height:calc(100vh - var(--header-h));
+    width:min(300px, 82vw);background:linear-gradient(180deg, #0B5A80 0%, #0C726E 100%);
+    transform:translateX(-100%);transition:transform .3s var(--ease-out);
+    overflow-y:auto;box-shadow:10px 0 30px rgba(0,0,0,0.3);
+  }
+  nav.main-nav.open{transform:translateX(0);}
+  .nav-inner{flex-direction:column;align-items:stretch;flex-wrap:nowrap;padding:10px 0;}
+  .nav-item{width:100%;}
+  .nav-item > a, .nav-item > button.nav-top{width:100%;justify-content:space-between;}
+  .dropdown{position:static;opacity:1;visibility:visible;transform:none;max-height:0;overflow:hidden;padding:0;border:none;box-shadow:none;background:rgba(0,0,0,0.14);transition:max-height .25s ease;}
+  .nav-item.open .dropdown{max-height:400px;padding:6px 6px 6px 14px;}
+  .dropdown a{color:var(--white);}
+  .dropdown a:hover{background:rgba(255,255,255,0.14);color:var(--white);}
 }
 
 @media (max-width:640px){
