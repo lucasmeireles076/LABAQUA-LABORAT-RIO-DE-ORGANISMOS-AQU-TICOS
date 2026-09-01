@@ -295,13 +295,14 @@ footer a:hover{color:var(--white);}
   --dev-credit-color:var(--white);
   --dev-credit-opacity:0.35;
   max-width:1180px;margin:10px auto 0;padding:0 32px;
-  display:flex;align-items:center;justify-content:flex-end;gap:3px;
+  display:flex;align-items:center;justify-content:flex-start;gap:3px;
+  font-size:10.5px;
   color:var(--dev-credit-color);
   opacity:var(--dev-credit-opacity);
 }
-.dev-credit a{display:inline-flex;align-items:center;gap:5px;color:var(--dev-credit-color);font-weight:600;transition:opacity .18s;}
+.dev-credit a{display:inline-flex;align-items:center;gap:4px;color:var(--dev-credit-color);font-weight:600;transition:opacity .18s;}
 .dev-credit a:hover{opacity:0.75;}
-.dev-credit svg{width:15px;height:12px;flex-shrink:0;}
+.dev-credit svg{width:11px;height:9px;flex-shrink:0;}
 .bottom-bar .suggest-toggle{
   background:linear-gradient(135deg, var(--ocean-deep), var(--seagrass));
   color:var(--white);border:none;padding:15px 28px;border-radius:999px;
