@@ -17,6 +17,15 @@ if (revealEls.length) {
   }
 }
 
+/* ===== CRÉDITO "DESENVOLVIDO POR" ===== */
+const devCredit = document.createElement('div');
+devCredit.className = 'dev-credit';
+devCredit.innerHTML = '<span>Desenvolvido por</span>' +
+  '<a href="https://www.instagram.com/lucasmeireles.dg/" target="_blank" rel="noopener" aria-label="Instagram de Lucas Meireles">' +
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/></svg>' +
+  'Lucas Meireles</a>';
+document.body.appendChild(devCredit);
+
 /* ===== MENU MOBILE (hambúrguer lateral) =====
    Injeta o botão e o overlay via JS (em vez de editar o HTML de cada
    página) — main.js já é compartilhado por todas elas. */

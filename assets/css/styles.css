@@ -122,6 +122,10 @@ header.site-header{position:fixed;top:0;left:0;right:0;height:var(--header-h);ba
 .header-right{display:flex;align-items:center;gap:22px;font-size:13.5px;color:var(--ink-soft);}
 .header-right a.cv-link{color:var(--ocean-deep);font-weight:600;padding:8px 16px;border:1.5px solid var(--ocean-deep);border-radius:999px;transition:background .18s, color .18s;font-size:13px;}
 .header-right a.cv-link:hover{background:var(--ocean-deep);color:var(--white);}
+/* outline padrão não acompanha bem o border-radius:999px (formato
+   "pílula") desse botão — vira um contorno duplo desalinhado ao focar.
+   box-shadow segue a curva certinho, então troca o outline por ele aqui. */
+.header-right a.cv-link:focus-visible{outline:none;box-shadow:0 0 0 2px var(--white), 0 0 0 4px var(--coral);}
 .header-contact{display:flex;flex-direction:column;gap:2px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink-soft);}
 .header-contact a{color:var(--ink-soft);transition:color .18s;}
 .header-contact a:hover{color:var(--seagrass);}
@@ -207,7 +211,15 @@ section.block.alt{background:rgba(255,255,255,0.72);}
 @media (max-width:900px){.nunes-gallery{grid-template-rows:repeat(3,70px);}}
 @media (max-width:560px){
   .nunes-gallery{grid-template-columns:repeat(2,1fr);grid-template-areas:none;grid-auto-rows:110px;}
-  .nunes-gallery figure{grid-area:auto;}
+  /* .g-a..g-g têm mais especificidade que ".nunes-gallery figure" acima,
+     então o reset de grid-area precisa mirar essas mesmas classes — senão
+     as 7 fotos continuam com grid-area:a/b/c/... apontando pra áreas
+     nomeadas que não existem mais aqui, e todas caem empilhadas na mesma
+     célula (só uma aparece, as outras 6 ficam escondidas atrás). */
+  .nunes-gallery .g-a, .nunes-gallery .g-b, .nunes-gallery .g-c,
+  .nunes-gallery .g-d, .nunes-gallery .g-e, .nunes-gallery .g-f, .nunes-gallery .g-g{
+    grid-area:auto;
+  }
 }
 .btn-outline{margin-top:20px;display:inline-block;padding:12px 26px;border:1.5px solid var(--ocean-deep);border-radius:999px;font-weight:600;font-size:14px;color:var(--ocean-deep);transition:background .18s,color .18s;}
 .btn-outline:hover{background:var(--ocean-deep);color:var(--white);}
@@ -266,6 +278,15 @@ footer a:hover{color:var(--white);}
   padding:0;z-index:300;box-shadow:none;
 }
 .bottom-bar .socials{display:none;}
+
+/* ===== CRÉDITO "DESENVOLVIDO POR" =====
+   Injetado pelo main.js (mesmo padrão do hambúrguer mobile) — discreto,
+   no canto oposto ao botão de sugestões. */
+.dev-credit{position:fixed;left:24px;bottom:24px;z-index:300;display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-soft);}
+.dev-credit a{display:inline-flex;align-items:center;gap:5px;color:var(--ink-soft);font-weight:600;transition:color .18s;}
+.dev-credit a:hover{color:var(--seagrass);}
+.dev-credit svg{width:15px;height:15px;flex-shrink:0;}
+@media (max-width:640px){.dev-credit{left:14px;bottom:14px;font-size:10.5px;}.dev-credit span{display:none;}}
 .bottom-bar .suggest-toggle{
   background:linear-gradient(135deg, var(--ocean-deep), var(--seagrass));
   color:var(--white);border:none;padding:15px 28px;border-radius:999px;
