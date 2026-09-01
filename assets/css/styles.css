@@ -266,7 +266,10 @@ section.block.alt{background:rgba(255,255,255,0.72);}
 .card-link.ghost:hover{background:var(--seagrass-light);border-color:var(--seagrass);}
 .card-link.ghost:hover .go{color:var(--ocean-deep);}
 
-footer{background:var(--ocean-deep);color:var(--sand-dim);padding:40px 0 calc(40px + var(--bar-h));}
+/* Padding vertical em 80% do valor original (era 40px) — o "+ var(--bar-h)"
+   continua igual, é só o respiro reservado pro botão flutuante de
+   Sugestões não cobrir o rodapé, não faz parte da "altura visual" dele. */
+footer{background:var(--ocean-deep);color:var(--sand-dim);padding:32px 0 calc(32px + var(--bar-h));}
 footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;font-size:13px;}
 footer a:hover{color:var(--white);}
 
@@ -280,21 +283,25 @@ footer a:hover{color:var(--white);}
 .bottom-bar .socials{display:none;}
 
 /* ===== CRÉDITO "DESENVOLVIDO POR" =====
-   Injetado pelo main.js (mesmo padrão do hambúrguer mobile) — discreto,
-   no canto oposto ao botão de sugestões. */
+   Injetado pelo main.js (mesmo padrão do hambúrguer mobile) como a
+   última linha do rodapé, abaixo do "© 2026 ..." — é irmão de footer
+   .wrap (não filho), por isso tem seu próprio max-width/padding aqui
+   em vez de reaproveitar a classe "wrap" (evita colidir com a regra
+   "footer .wrap{justify-content:space-between}", mais específica). */
 .dev-credit{
   /* >>> AJUSTE AQUI a cor e a opacidade do crédito "Desenvolvido por" <<<
      --dev-credit-color   : qualquer cor CSS (nome, hex, var(--...) etc.)
-     --dev-credit-opacity : 0 (invisível) até 1 (100% sólido) */
+     --dev-credit-opacity : 0 (invisível) até 1 (75% sólido) */
   --dev-credit-color:var(--white);
-  --dev-credit-opacity:0.95;
-  display:flex;align-items:center;gap:6px;
+  --dev-credit-opacity:0.35;
+  max-width:1180px;margin:10px auto 0;padding:0 32px;
+  display:flex;align-items:center;justify-content:flex-end;gap:3px;
   color:var(--dev-credit-color);
   opacity:var(--dev-credit-opacity);
 }
 .dev-credit a{display:inline-flex;align-items:center;gap:5px;color:var(--dev-credit-color);font-weight:600;transition:opacity .18s;}
 .dev-credit a:hover{opacity:0.75;}
-.dev-credit svg{width:15px;height:15px;flex-shrink:0;}
+.dev-credit svg{width:15px;height:12px;flex-shrink:0;}
 .bottom-bar .suggest-toggle{
   background:linear-gradient(135deg, var(--ocean-deep), var(--seagrass));
   color:var(--white);border:none;padding:15px 28px;border-radius:999px;
