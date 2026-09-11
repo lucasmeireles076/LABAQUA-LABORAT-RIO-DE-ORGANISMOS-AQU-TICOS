@@ -3,10 +3,8 @@
   LABAQUA — Laboratório de Organismos Aquáticos (Jorge L. S. Nunes / UFMA)
   ============================================================================
   Página FILHA do site (repete header/nav/footer/suggest-panel/bottom-bar
-  de index.html). Mostra só um aviso de "Página em desenvolvimento." no
-  meio (classe .devpage) — troque essa seção quando o conteúdo real
-  estiver pronto.
-  Página: Grupo de Estudo — arquivo parceria-grupo-estudo.html
+  de index.html).
+  Página: Rede de Pesquisa — arquivo parceria-grupo-estudo.html
   ============================================================================
 -->
 <!DOCTYPE html>
@@ -15,24 +13,29 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Grupo de Estudo | LabAqua — Laboratório de Organismos Aquáticos (UFMA)">
-<meta property="og:description" content="Grupo de estudo do LabAqua — Laboratório de Organismos Aquáticos (UFMA).">
+<meta property="og:title" content="Rede de Pesquisa | LabAqua — Laboratório de Organismos Aquáticos (UFMA)">
+<meta property="og:description" content="Rede de pesquisa do LabAqua — Laboratório de Organismos Aquáticos (UFMA).">
 <meta property="og:image" content="LOGO.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="assets/logo-header.png" type="image/png">
 <meta name="theme-color" content="#0B5A80">
-<title>Grupo de Estudo | LabAqua — Laboratório de Organismos Aquáticos (UFMA)</title>
+<title>Rede de Pesquisa | LabAqua — Laboratório de Organismos Aquáticos (UFMA)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="assets/css/styles.css">
 <style>
-/* ===== PÁGINA "EM DESENVOLVIMENTO" =====
-     Bloco central usado em páginas ainda sem conteúdo definitivo. */
-  .devpage{min-height:56vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 24px;}
-  .devpage .eyebrow{justify-content:center;display:flex;}
-  .devpage h1{font-size:clamp(26px,4vw,38px);margin:12px 0 14px;}
-  .devpage p{color:var(--ink-soft);max-width:480px;margin:0 auto 26px;font-size:15.5px;}
+  /* ===== APOIADORES (logos) ===== */
+  .logo-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(180px, 1fr));gap:20px;}
+  .logo-card{
+    background:var(--white);border-radius:var(--radius-m);border:1px solid rgba(12,114,110,0.06);
+    box-shadow:0 12px 26px rgba(14,46,44,0.08);display:flex;flex-direction:column;align-items:center;
+    gap:12px;padding:20px 16px;text-align:center;transition:box-shadow .22s ease, transform .22s ease;
+  }
+  .logo-card:hover{box-shadow:0 14px 30px rgba(14,46,44,0.16);transform:translateY(-4px);}
+  .logo-card .logo-img-wrap{width:100%;height:74px;display:flex;align-items:center;justify-content:center;}
+  .logo-card img{max-width:100%;max-height:74px;object-fit:contain;display:block;}
+  .logo-card span{font-size:13px;font-weight:600;color:var(--ink);line-height:1.3;}
 </style>
 </head>
 <body>
@@ -68,7 +71,7 @@
       <div class="dropdown">
         <a href="parceria-alunos.html">Alunos</a>
         <a href="parceria-pesquisadores.html">Pesquisadores</a>
-        <a href="parceria-grupo-estudo.html">Grupo de Estudo</a>
+        <a href="parceria-grupo-estudo.html">Rede de Pesquisa</a>
       </div>
     </div>
     <div class="nav-item">
@@ -90,12 +93,322 @@
 </nav>
 
 <main>
-  <section class="devpage fade-up">
-    <span class="eyebrow">Parceria · Grupo de Estudo</span>
-    <h1>Página em desenvolvimento.</h1>
-    <p>Estamos preparando o conteúdo de <strong>Grupo de Estudo</strong>. Volte em breve para conferir as novidades.</p>
-    <a class="btn-outline" href="index.html#inicio">← Voltar para o início</a>
+
+  <!-- ===== INTRO DA PÁGINA "REDE DE PESQUISA" ===== -->
+  <section class="hero" style="padding:64px 0 24px;">
+    <div class="wrap hero-inner">
+      <span class="eyebrow fade-up">Parceria · Rede de Pesquisa</span>
+      <h1 class="fade-up d1">Rede de Pesquisa</h1>
+      <p class="lede fade-up d2">Instituições, projetos e apoiadores que colaboram com o LabAqua, e pesquisadores associados que integram a rede.</p>
+    </div>
   </section>
+
+  <!-- ===== APOIADORES ===== -->
+  <section class="block alt">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Rede de Pesquisa</span>
+        <h2>Apoiadores</h2>
+      </div>
+      <div class="logo-grid reveal-stagger">
+
+        <a class="logo-card reveal" href="https://www.instagram.com/13gemar_nopozao/" target="_blank" rel="noopener">
+          <span class="logo-img-wrap"><img src="assets/apoiadores/13-gemar-norberto-pedrosa.jpg" alt="13º Grupo Escoteiro do Mar Norberto Pedrosa" loading="lazy"></span>
+          <span>13º Grupo Escoteiro do Mar Norberto Pedrosa</span>
+        </a>
+
+        <a class="logo-card reveal" href="https://periodicoseletronicos.ufma.br/index.php/blabohidro/issue/view/1085" target="_blank" rel="noopener">
+          <span class="logo-img-wrap"><img src="assets/apoiadores/boletim-labohidro.jpg" alt="Boletim do Laboratório de Hidrobiologia" loading="lazy"></span>
+          <span>Boletim do Laboratório de Hidrobiologia</span>
+        </a>
+
+        <a class="logo-card reveal" href="https://sigaa.ufma.br/sigaa/public/curso/portal.jsf?lc=pt_BR&id=85828" target="_blank" rel="noopener">
+          <span class="logo-img-wrap"><img src="assets/apoiadores/curso-oceanografia.jpeg" alt="Curso de Oceanografia (UFMA)" loading="lazy"></span>
+          <span>Curso de Oceanografia (UFMA)</span>
+        </a>
+
+        <a class="logo-card reveal" href="https://www.instagram.com/forest.brasil/" target="_blank" rel="noopener">
+          <span class="logo-img-wrap"><img src="assets/apoiadores/forest.jpg" alt="Forest" loading="lazy"></span>
+          <span>Forest</span>
+        </a>
+
+        <a class="logo-card reveal" href="https://squalus.org/" target="_blank" rel="noopener">
+          <span class="logo-img-wrap"><img src="assets/apoiadores/fundacion-squalus.jpg" alt="Fundación Squalus" loading="lazy"></span>
+          <span>Fundación Squalus</span>
+        </a>
+
+        <a class="logo-card reveal" href="https://www.instagram.com/hauserdavis_group/" target="_blank" rel="noopener">
+          <span class="logo-img-wrap"><img src="assets/apoiadores/hauser-davis-research-group.jpg" alt="Hauser-Davis Research Group" loading="lazy"></span>
+          <span>Hauser-Davis Research Group</span>
+        </a>
+
+        <a class="logo-card reveal" href="https://www.huberartemarinha.com.br/artista.php" target="_blank" rel="noopener">
+          <span class="logo-img-wrap"><img src="assets/apoiadores/huber-arte-marinha.jpg" alt="Huber Arte Marinha" loading="lazy"></span>
+          <span>Huber Arte Marinha</span>
+        </a>
+
+        <a class="logo-card reveal" href="https://www.marinha.mil.br/ieapm/" target="_blank" rel="noopener">
+          <span class="logo-img-wrap"><img src="assets/apoiadores/ieapm.png" alt="IEAPM — Instituto de Estudos do Mar Almirante Paulo Moreira" loading="lazy"></span>
+          <span>IEAPM — Instituto de Estudos do Mar Almirante Paulo Moreira</span>
+        </a>
+
+        <a class="logo-card reveal" href="https://www.instagram.com/fortesantoantoniodabarraslz/" target="_blank" rel="noopener">
+          <span class="logo-img-wrap"><img src="assets/apoiadores/museu-santo-antonio-da-barra.jpeg" alt="Museu Santo Antônio da Barra" loading="lazy"></span>
+          <span>Museu Santo Antônio da Barra</span>
+        </a>
+
+        <a class="logo-card reveal" href="https://www.instagram.com/associacao_ambiental_orla_viva/" target="_blank" rel="noopener">
+          <span class="logo-img-wrap"><img src="assets/apoiadores/orla-viva.jpg" alt="Orla Viva" loading="lazy"></span>
+          <span>Orla Viva</span>
+        </a>
+
+        <a class="logo-card reveal" href="https://www.plusimpressao.com.br/" target="_blank" rel="noopener">
+          <span class="logo-img-wrap"><img src="assets/apoiadores/plus-grafica-rapida.jpg" alt="Plus Gráfica Rápida" loading="lazy"></span>
+          <span>Plus Gráfica Rápida</span>
+        </a>
+
+        <a class="logo-card reveal" href="https://www.instagram.com/postos_americano/" target="_blank" rel="noopener">
+          <span class="logo-img-wrap"><img src="assets/apoiadores/postos-americano.png" alt="Postos Americano" loading="lazy"></span>
+          <span>Postos Americano</span>
+        </a>
+
+        <a class="logo-card reveal" href="https://sigaa.ufma.br/sigaa/public/programa/apresentacao_stricto.jsf?lc=pt_BR&idPrograma=934" target="_blank" rel="noopener">
+          <span class="logo-img-wrap"><img src="assets/apoiadores/ppg-biodiversidade-conservacao.jpeg" alt="Programa de Pós-Graduação em Biodiversidade e Conservação" loading="lazy"></span>
+          <span>Programa de Pós-Graduação em Biodiversidade e Conservação</span>
+        </a>
+
+        <a class="logo-card reveal" href="https://www.bionorte.org.br/" target="_blank" rel="noopener">
+          <span class="logo-img-wrap"><img src="assets/apoiadores/ppg-biodiversidade-biotecnologia.jpg" alt="Programa de Pós-Graduação em Biodiversidade e Biotecnologia (BIONORTE)" loading="lazy"></span>
+          <span>Programa de Pós-Graduação em Biodiversidade e Biotecnologia (BIONORTE)</span>
+        </a>
+
+        <a class="logo-card reveal" href="https://budioes.org/" target="_blank" rel="noopener">
+          <span class="logo-img-wrap" style="border-radius:8px;padding:10px;background:linear-gradient(155deg, var(--ocean-mid), var(--seagrass) 78%);">
+            <img src="assets/apoiadores/budioes-logo.png" alt="Projeto Budiões" loading="lazy" style="max-height:54px;">
+          </span>
+          <span>Projeto Budiões</span>
+        </a>
+
+        <a class="logo-card reveal" href="https://portalpadrao.ufma.br/" target="_blank" rel="noopener">
+          <span class="logo-img-wrap"><img src="assets/apoiadores/ufma.jpg" alt="Universidade Federal do Maranhão" loading="lazy"></span>
+          <span>Universidade Federal do Maranhão</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PESQUISADORES ASSOCIADOS ===== -->
+  <section class="block">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Rede de Pesquisa</span>
+        <h2>Pesquisadores Associados</h2>
+      </div>
+      <div class="person-grid reveal-stagger">
+
+        <div class="person-card reveal">
+          <div class="person-photo"><img src="assets/photos/associados/ana-paula-barbosa-martins.jpg" alt="Ana Paula Barbosa Martins" loading="lazy"></div>
+          <div class="person-info">
+            <h4>Ana Paula Barbosa Martins</h4>
+            <a class="person-btn" href="http://lattes.cnpq.br/4331336761371925" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+              Conferir currículo
+            </a>
+          </div>
+        </div>
+
+        <div class="person-card reveal">
+          <div class="person-photo"><img src="assets/photos/associados/eurico-mesquita-noleto-filho.jpeg" alt="Eurico Mesquita Noleto Filho" loading="lazy"></div>
+          <div class="person-info">
+            <h4>Eurico Mesquita Noleto Filho</h4>
+            <a class="person-btn" href="http://lattes.cnpq.br/9671212401003657" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+              Conferir currículo
+            </a>
+          </div>
+        </div>
+
+        <div class="person-card reveal">
+          <div class="person-photo"><img src="assets/photos/associados/fabiano-paschoal-de-oliveira.jpeg" alt="Fabiano Paschoal de Oliveira" loading="lazy"></div>
+          <div class="person-info">
+            <h4>Fabiano Paschoal de Oliveira</h4>
+            <a class="person-btn" href="http://lattes.cnpq.br/6525771214012931" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+              Conferir currículo
+            </a>
+          </div>
+        </div>
+
+        <div class="person-card reveal">
+          <div class="person-photo"><img src="assets/photos/associados/getulio-rincon.jpeg" alt="Getúlio Rincón" loading="lazy"></div>
+          <div class="person-info">
+            <h4>Getúlio Rincón</h4>
+            <a class="person-btn" href="http://lattes.cnpq.br/8184140877000806" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+              Conferir currículo
+            </a>
+          </div>
+        </div>
+
+        <div class="person-card reveal">
+          <div class="person-photo"><img src="assets/photos/associados/joao-braullio-de-luna-sales.jpg" alt="João Braullio de Luna Sales" loading="lazy"></div>
+          <div class="person-info">
+            <h4>João Braullio de Luna Sales</h4>
+            <a class="person-btn" href="https://lattes.cnpq.br/1304788054324708" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+              Conferir currículo
+            </a>
+          </div>
+        </div>
+
+        <div class="person-card reveal">
+          <div class="person-photo"><img src="assets/photos/associados/jose-de-ribamar-souza-torres-junior.jpg" alt="José de Ribamar de Souza Torres Júnior" loading="lazy"></div>
+          <div class="person-info">
+            <h4>José de Ribamar de Souza Torres Júnior</h4>
+            <a class="person-btn" href="http://lattes.cnpq.br/7462697632109147" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+              Conferir currículo
+            </a>
+          </div>
+        </div>
+
+        <div class="person-card reveal">
+          <div class="person-photo"><img src="assets/photos/associados/leonardo-manir-feitosa.jpeg" alt="Leonardo Manir Feitosa" loading="lazy"></div>
+          <div class="person-info">
+            <h4>Leonardo Manir Feitosa</h4>
+            <a class="person-btn" href="http://lattes.cnpq.br/2008522051327456" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+              Conferir currículo
+            </a>
+          </div>
+        </div>
+
+        <div class="person-card reveal">
+          <div class="person-photo"><img src="assets/photos/associados/luis-fernando-da-silva-rodrigues-filho.jpeg" alt="Luís Fernando da Silva Rodrigues Filho" loading="lazy"></div>
+          <div class="person-info">
+            <h4>Luís Fernando da Silva Rodrigues Filho</h4>
+            <a class="person-btn" href="http://lattes.cnpq.br/2581885567813522" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+              Conferir currículo
+            </a>
+          </div>
+        </div>
+
+        <div class="person-card reveal">
+          <div class="person-photo"><img src="assets/photos/associados/marcelo-derzi-vidal.jpeg" alt="Marcelo Derzi Vidal" loading="lazy"></div>
+          <div class="person-info">
+            <h4>Marcelo Derzi Vidal</h4>
+            <a class="person-btn" href="http://lattes.cnpq.br/0861725321644797" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+              Conferir currículo
+            </a>
+          </div>
+        </div>
+
+        <div class="person-card reveal">
+          <div class="person-photo"><img src="assets/photos/associados/natascha-wosnick.png" alt="Natascha Wosnick" loading="lazy"></div>
+          <div class="person-info">
+            <h4>Natascha Wosnick</h4>
+            <a class="person-btn" href="http://lattes.cnpq.br/1871674868620853" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+              Conferir currículo
+            </a>
+          </div>
+        </div>
+
+        <div class="person-card reveal">
+          <div class="person-photo"><img src="assets/photos/associados/nivaldo-magalhaes-piorski.jpg" alt="Nivaldo Magalhães Piorski" loading="lazy"></div>
+          <div class="person-info">
+            <h4>Nivaldo Magalhães Piorski</h4>
+            <a class="person-btn" href="http://lattes.cnpq.br/7220575466585169" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+              Conferir currículo
+            </a>
+          </div>
+        </div>
+
+        <div class="person-card reveal">
+          <div class="person-photo"><img src="assets/photos/associados/oscar-miguel-lasso-alcala.jpeg" alt="Oscar Miguel Lasso-Alcalá" loading="lazy"></div>
+          <div class="person-info">
+            <h4>Oscar Miguel Lasso-Alcalá</h4>
+            <a class="person-btn" href="http://lattes.cnpq.br/1773034418819042" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+              Conferir currículo
+            </a>
+          </div>
+        </div>
+
+        <div class="person-card reveal">
+          <div class="person-photo"><img src="assets/photos/associados/rachel-ann-hauser-davis.jpg" alt="Rachel Ann Hauser-Davis" loading="lazy"></div>
+          <div class="person-info">
+            <h4>Rachel Ann Hauser-Davis</h4>
+            <a class="person-btn" href="http://lattes.cnpq.br/5987657587996872" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+              Conferir currículo
+            </a>
+          </div>
+        </div>
+
+        <div class="person-card reveal">
+          <div class="person-photo"><img src="assets/photos/associados/riccardo-mugnai.jpg" alt="Riccardo Mugnai" loading="lazy"></div>
+          <div class="person-info">
+            <h4>Riccardo Mugnai</h4>
+            <a class="person-btn" href="http://lattes.cnpq.br/2895466277856988" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+              Conferir currículo
+            </a>
+          </div>
+        </div>
+
+        <div class="person-card reveal">
+          <div class="person-photo"><img src="assets/photos/associados/salvatore-siciliano.jpeg" alt="Salvatore Siciliano" loading="lazy"></div>
+          <div class="person-info">
+            <h4>Salvatore Siciliano</h4>
+            <a class="person-btn" href="http://lattes.cnpq.br/2471615656999141" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+              Conferir currículo
+            </a>
+          </div>
+        </div>
+
+        <div class="person-card reveal">
+          <div class="person-photo"><img src="assets/photos/associados/tommaso-giarrizzo.jpeg" alt="Tommaso Giarrizzo" loading="lazy"></div>
+          <div class="person-info">
+            <h4>Tommaso Giarrizzo</h4>
+            <a class="person-btn" href="http://lattes.cnpq.br/5889416127858884" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+              Conferir currículo
+            </a>
+          </div>
+        </div>
+
+        <div class="person-card reveal">
+          <div class="person-photo"><img src="assets/photos/associados/vidal-haddad-junior.jpeg" alt="Vidal Haddad Júnior" loading="lazy"></div>
+          <div class="person-info">
+            <h4>Vidal Haddad Júnior</h4>
+            <a class="person-btn" href="http://lattes.cnpq.br/7385129302501798" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+              Conferir currículo
+            </a>
+          </div>
+        </div>
+
+        <div class="person-card reveal">
+          <div class="person-photo"><img src="assets/photos/associados/wellington-silva-pedroza.jpg" alt="Wellington Silva Pedroza" loading="lazy"></div>
+          <div class="person-info">
+            <h4>Wellington Silva Pedroza</h4>
+            <a class="person-btn" href="http://lattes.cnpq.br/0679832771536044" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+              Conferir currículo
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
 </main>
 
 <footer>

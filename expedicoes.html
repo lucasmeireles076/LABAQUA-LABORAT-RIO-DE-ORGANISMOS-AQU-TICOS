@@ -57,6 +57,16 @@
 
   /* Estilos de .lightbox/.lb-* agora vivem em assets/css/styles.css
      (compartilhados com projetos e o mosaico do coordenador na home). */
+
+  /* ===== MAPA DOS PONTOS DE AMOSTRAGEM ===== */
+  .map-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));gap:24px;}
+  .map-card{
+    background:var(--white);border-radius:var(--radius-m);overflow:hidden;
+    box-shadow:0 12px 26px rgba(14,46,44,0.08);border:1px solid rgba(12,114,110,0.06);
+    display:block;
+  }
+  .map-card img{width:100%;display:block;cursor:zoom-in;}
+  .map-card figcaption{padding:14px 18px;font-size:13.5px;color:var(--ink-soft);}
 </style>
 </head>
 <body>
@@ -95,7 +105,7 @@
       <div class="dropdown">
         <a href="parceria-alunos.html">Alunos</a>
         <a href="parceria-pesquisadores.html">Pesquisadores</a>
-        <a href="parceria-grupo-estudo.html">Grupo de Estudo</a>
+        <a href="parceria-grupo-estudo.html">Rede de Pesquisa</a>
       </div>
     </div>
 
@@ -125,6 +135,26 @@
       <span class="eyebrow fade-up">Expedições</span>
       <h1 class="fade-up d1">Campanhas de campo</h1>
       <p class="lede fade-up d2">Expedições de coleta e pesquisa realizadas pelo LabAqua no litoral maranhense e na costa amazônica. Clique em "Ver fotos" para abrir a galeria de cada expedição.</p>
+    </div>
+  </section>
+
+  <!-- ===== MAPA DOS PONTOS DE AMOSTRAGEM ===== -->
+  <section class="block">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Área de estudo</span>
+        <h2>Pontos de amostragem</h2>
+      </div>
+      <div class="map-grid reveal-stagger">
+        <a class="map-card reveal" href="assets/mapas/mapa-pontos-amostragem-1.jpg" target="_blank" rel="noopener">
+          <img src="assets/mapas/mapa-pontos-amostragem-1.jpg" alt="Mapa dos pontos de amostragem do LabAqua no litoral e bacias do Maranhão" loading="lazy">
+          <figcaption>Mapa geral dos pontos de amostragem. Clique para ampliar.</figcaption>
+        </a>
+        <a class="map-card reveal" href="assets/mapas/mapa-pontos-amostragem-2.jpg" target="_blank" rel="noopener">
+          <img src="assets/mapas/mapa-pontos-amostragem-2.jpg" alt="Mapa detalhado dos pontos de amostragem do LabAqua no litoral e bacias do Maranhão" loading="lazy">
+          <figcaption>Mapa detalhado dos pontos de amostragem. Clique para ampliar.</figcaption>
+        </a>
+      </div>
     </div>
   </section>
 
